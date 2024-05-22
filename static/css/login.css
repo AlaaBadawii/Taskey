@@ -10,12 +10,14 @@ main {
 
 .box {
     width: 100%;
-    max-width: 300px;
+    max-width: 350px;
     padding: 45px 30px;
     background-color: var(--main-color);
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
+
+
 
 .login-container h2 {
     font-size: 24px;
