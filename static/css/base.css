@@ -1,16 +1,9 @@
 :root {
-    --main-color: #647295;
-    --secondary-color: #2B262D;
+    --main-color: #fff3a9;
+    --secondary-color: #c50c0c;
     --font-color: #F2EBE5;
-    --font-secondary-color: #9F496E;
 }
 
-:root {
-    --main-color: #BAcEC1;
-    --secondary-color: #E59560;
-    --font-color: #F6F4E8;
-    --font-secondary-color: #1D3124;
-}
 
 * {
     margin: 0;
@@ -72,11 +65,12 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 50px;
-    background-color: var(--secondary-color);
+    padding: 15px 40px;
+    background-color: var(--main-color);
     color: var(--font-color);
     position: fixed;
     top: 0;
+    left: 0;
     width: 100%;
     z-index: 1000;
 }
