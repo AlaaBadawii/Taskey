@@ -1,56 +1,84 @@
-/* login.css */
-
-/* Body styles */
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f2f2f2;
+main {
+    width: 90%;
+    margin-top: 200px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-/* Login container styles */
-.login-container {
-    width: 300px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+.box {
+    width: 100%;
+    max-width: 300px;
+    padding: 45px 30px;
+    background-color: var(--main-color);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Login form styles */
-.login-form {
+.login-container h2 {
+    font-size: 24px;
     margin-bottom: 20px;
+    text-align: center;
 }
 
-.login-form label {
+.login-container .input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: none;
+    border-radius: 5px;
+    outline: var(--second-color);
+}
+
+.login-container .checkbox {
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.login-container .checkbox input {
+    margin-right: 10px;
+}
+
+.login-container .checkbox label {
+    color: var(--font-color);
+}
+
+.login-container .button {
+    width: fit-content;
+    margin: auto;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: var(--secondary-color);
+    cursor: pointer;
     display: block;
-    margin-bottom: 5px;
+    color: var(--font-color);
+    font-size: 14px;
+}
+
+.login-container .button:hover {
+    background-color: var(--third-color);
+    color: var(--secondary-color);
+    transition: 0.3s;
     font-weight: bold;
 }
 
-.login-form input[type="text"],
-.login-form input[type="password"] {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-}
-
-.login-form button {
+.login-container .notification {
     width: 100%;
     padding: 10px;
-    background-color: #4CAF50;
-    color: #fff;
+    margin-bottom: 15px;
     border: none;
-    border-radius: 3px;
-    cursor: pointer;
+    border-radius: 5px;
+    outline: var(--second-color);
+    background-color: var(--secondary-color);
+    color: var(--font-color);
 }
 
-.login-form button:hover {
-    background-color: #45a049;
-}
-
-/* Error message styles */
-.error-message {
-    color: red;
-    margin-top: 10px;
+.login-container .notification a {
+    color: var(--main-color);
+    font-weight: bold;
 }

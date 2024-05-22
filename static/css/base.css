@@ -2,7 +2,11 @@
     --main-color: #fff3a9;
     --secondary-color: #c50c0c;
     --font-color: #F2EBE5;
+    --third-color: #ffffff;
 }
+
+/* font */
+/* <uniquifier>: Use a unique and descriptive class name */
 
 
 * {
@@ -19,20 +23,10 @@ a {
     text-decoration: none;
 }
 
-body {
-    font-family: 'Roboto', sans-serif;
+/* body {
     background-color: #fff;
-    color: var(--font-color);
-}
+} */
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    color: var(--font-color);
-}
 
 h1 {
     font-size: 40px;
@@ -75,9 +69,39 @@ header {
     z-index: 1000;
 }
 
+header img {
+    width: 120px;
+}
+
+header .menu {
+    display: none;
+}
+
+header ul {
+    display: flex;
+}
+
+header ul li {
+    margin-left: 20px;
+    padding: 10px 15px;
+    font-weight: bold;
+    font-size: 20px;
+    color: var(--secondary-color);
+    border-radius: 6px;   
+}
+
+header ul li:hover {
+    background-color: var(--third-color);
+    color: var(--main-color);
+    transition: 0.3s;
+}
+
+header ul li a {
+    color: var(--secondary-color);
+}
+
 main {
     margin-top: 100px;
-    background-color: var(--main-color);
     width: 90%;
     margin: 0 auto;
 }

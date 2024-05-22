@@ -1,0 +1,79 @@
+/* Light Weight */
+.cairo-light {
+    font-family: "Cairo", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 200;
+    font-style: normal;
+    font-variation-settings:
+        "slnt" 0;
+}
+
+/* Regular Weight */
+.cairo-regular {
+    font-family: "Cairo", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-variation-settings:
+        "slnt" 0;
+}
+
+/* Medium Weight */
+.cairo-medium {
+    font-family: "Cairo", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+    font-variation-settings:
+        "slnt" 0;
+}
+
+/* Semi-Bold Weight */
+.cairo-semi-bold {
+    font-family: "Cairo", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-style: normal;
+    font-variation-settings:
+        "slnt" 0;
+}
+
+/* Bold Weight */
+.cairo-bold {
+    font-family: "Cairo", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 700;
+    font-style: normal;
+    font-variation-settings:
+        "slnt" 0;
+}
+
+/* Extra-Bold Weight */
+.cairo-extra-bold {
+    font-family: "Cairo", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 800;
+    font-style: normal;
+    font-variation-settings:
+        "slnt" 0;
+}
+
+/* Black Weight */
+.cairo-black {
+    font-family: "Cairo", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 900;
+    font-style: normal;
+    font-variation-settings:
+        "slnt" 0;
+}
+
+/* Ultra Weight */
+.cairo-ultra {
+    font-family: "Cairo", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 1000;
+    font-style: normal;
+    font-variation-settings:
+        "slnt" 0;
+}
