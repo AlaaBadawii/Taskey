@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="login-container">
+    <h3 class="title">Login</h3>
+    <div class="box">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <div class="notification">
+            {{ messages[0] }} <a href="{{ url_for('auth.signup') }}">Sign up</a>
+
+        </div>
+        {% endif %}
+        {% endwith %}
+        <form class="login-form" method="POST" action="/login">
+            <form method="POST" action="/login">
+                <input class="input" type="email" name="email" placeholder="Your Email" autofocus="" required>
+
+                <input class="input" type="password" name="password" placeholder="Your Password" required>
+                <label class="checkbox">
+                    <input type="checkbox" name="remember">
+                    Remember me
+                </label>
+                <button class="button">Login</button>
+            </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,89 @@
+:root {
+    --main-color: #647295;
+    --secondary-color: #2B262D;
+    --font-color: #F2EBE5;
+    --font-secondary-color: #9F496E;
+}
+
+:root {
+    --main-color: #BAcEC1;
+    --secondary-color: #E59560;
+    --font-color: #F6F4E8;
+    --font-secondary-color: #1D3124;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+ul {
+    list-style-type: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #fff;
+    color: var(--font-color);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: var(--font-color);
+}
+
+h1 {
+    font-size: 40px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+h2 {
+    font-size: 30px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+h3 {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+h4 {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+
+/* Path: static/css/header.css */
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 50px;
+    background-color: var(--secondary-color);
+    color: var(--font-color);
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+main {
+    margin-top: 100px;
+    background-color: var(--main-color);
+    width: 90%;
+    margin: 0 auto;
+}
