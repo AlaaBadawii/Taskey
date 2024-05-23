@@ -1,7 +1,57 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1 class="title">
-    Welcome, {{ name }}!
-</h1>
+{% block css %}
+<link rel="stylesheet" href="/static/css/profile.css">
+{% endblock %}
+<div class="profile_container">
+    <!-- <i class="fa-solid fa-sliders"></i> -->
+    <nav>
+        <ul>
+            <!-- <li>
+                <a href="#" class="user_setting">
+                    Hello,  {{ current_user.username }}!
+                </a>
+            </li> -->
+            <!-- <li>
+                <a href="#" class="search">
+                    <i class="fa-solid fa-search"></i> Search
+                </a>
+            </li> -->
+            <li>
+                <a href="{{ url_for('main.create') }}" class="create">
+                    <i class="fa-solid fa-plus"></i> Add task
+                </a>
+            </li>
+            <li>
+                <a href="#" class="all">
+                    <span id="current-date"></span> Today
+                </a>
+            </li>
+            <li>
+                <a href="#" class="calnder">
+                    <i class="fa-solid fa-calendar-days"></i> Upcoming
+                </a>
+            </li>
+            <ul class="groups">
+                <li>
+                    <a href="#" class="group">
+                        <i class="fa-solid fa-hand"></i> Getting started
+                    </a>
+                </li>
+                {% for group in groups %}
+                <li>
+                    <a href="#" class="group">
+                        <i class="fa-solid fa-hashtag"></i> {{ group.name }}
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+        </ul>
+    </nav>
+    <main></main>
+</div>
+{% block js %}
+<script src="/static/js/calc_date.js"></script>
+{% endblock %}
 {% endblock %}

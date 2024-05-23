@@ -16,7 +16,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/static/css/fonts.css">
     {% block css %}
-    
+
     {% endblock %}
 </head>
 
@@ -65,10 +65,8 @@
             {% endif %}
         </ul>
     </header>
-    <main>
-        {% block content %}
-        {% endblock %}
-    </main>
+    {% block content %}
+    {% endblock %}
 
     <script src="{{ url_for('static', filename='js/delete_account.js') }}"></script>
     {% block js %}

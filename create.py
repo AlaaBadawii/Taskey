@@ -3,7 +3,6 @@ from .models.user import User
 from .models.task import Task
 from .models.group import Group
 from .models.tag import Tag
-
 # Create the Flask application instance
 app = create_app()
 
