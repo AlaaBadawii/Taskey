@@ -1,0 +1,61 @@
+main.create h2 {
+    text-align: center;
+    margin-top: 20px;
+}
+
+main.create form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 15px 20px;
+    max-width: 500px;
+    border-radius: 6px;
+    background-color: #eee;
+    margin: 20px auto 0;
+    box-shadow: 5px 5px 8px rgba(0, 0, 0, 0.1)
+}
+
+main.create form>input,
+main.create form>textarea,
+main.create form .priority {
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    outline: none;
+    max-width: 500px;
+    background-color: white;
+}
+main.create form .priority span{
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+main.create form>textarea {
+    resize: none;
+    height: 100px;
+}
+
+main.create form>input:focus,
+main.create form>textarea:focus,
+main.create form .priority:focus {
+    border-color: var(--secondary-color);
+}
+
+main.create form>button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 6px;
+    background-color: var(--secondary-color);
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+    width: fit-content;
+    margin-left: 50%;
+    transform: translateX(-50%);
+    border: 1px solid var(--secondary-color);
+}
+
+main.create form>button:hover {
+    background-color: var(--third-color);
+    color: var(--secondary-color);
+}

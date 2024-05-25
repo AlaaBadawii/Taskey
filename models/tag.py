@@ -9,7 +9,7 @@ from .. import db
 class Tag(BaseModel):
     __tablename__ = 'tag'
 
-    id = db.Column(db.Integer, primary_key=True)  # Removed nullable=False
+    id = db.Column(db.Integer, primary_key=True)
     tag_name = db.Column(db.String(50), nullable=False, unique=True)
     task_id = db.Column(db.Integer, db.ForeignKey('task.id'), nullable=False)
 

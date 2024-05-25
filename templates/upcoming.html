@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block content %}
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/upcoming.css') }}">
+{% endblock %}
+<main class="upcoming">
+    <ul>
+        {% for task in tasks %}
+        <li class="task {%if task.status == 'completed'%} completed {% endif %}">
+            <div>
+                <div class="task-name">
+                    <h3>{{ task.task_name }}</h3>
+                </div>
+                <div class="task-info">
+                    <p>Title: {{ task.task_title }}</p>
+                    <div>
+                        <i class="fa-solid fa-calendar-day"></i>
+                        <p>{{ task.due_date }}</p>
+                    </div>
+                </div>
+                <div class="more">
+                    <a href="{{ url_for('main.task', task_id=task.id ) }}">More...</a>
+                </div>
+            </div>
+            <i class="fa-solid fa-chevron-down list"></i>
+            <div class="task-actions">
+                <a href="{{ url_for('main.edit', task_id=task.id) }}" class="edit">Edit</a>
+                <a href="{{ url_for('main.delete', task_id=task.id) }}" class="delete">Delete</a>
+            </div>
+        </li>
+        <!-- <div class="full_task_info">
+            <div class="task-title">
+                <h3>{{ task.task_title }}</h3>
+            </div>
+            <div class="task-info">
+                <p>{{ task.task_description }}</p>
+                <div>
+                    <i class="fa-solid fa-calendar-day"></i>
+                    <p>{{ task.due_date }}</p>
+                </div>
+                <div>
+                    <i class="fa-solid fa-hashtag"></i>
+                    <p>{{ task.group }}</p>
+                </div>
+                <div>
+                    <i class="fa-solid fa-check"></i>
+                    <p>{{ task.status }}</p>
+                </div>
+                <div>
+                    <i class="fa-solid fa-comment"></i>
+                    <p>{{ task.discription }}</p>
+                </div>
+            </div> -->
+        {% endfor %}
+    </ul>
+</main>
+{% block js %}
+<script src="{{ url_for('static', filename='js/upcoming.js') }}"></script>
+{% endblock %}
+{% endblock %}

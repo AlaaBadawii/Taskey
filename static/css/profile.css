@@ -1,10 +1,6 @@
-.profile_container {
-    display: flex;
-    height: calc(100vh - 72.4px);
-    margin-top: 72.4px;
-}
 
-.profile_container nav {
+
+/* .container nav {
     flex: 2;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     background-color: #FAFAFA;
@@ -13,16 +9,16 @@
     padding: 10px 15px;
 }
 
-.profile_container nav ul li {
+.container nav ul li {
     padding: 10px 15px;
     transition: 0.3s;
 }
 
-.profile_container nav ul li a {
+.container nav ul li a {
     color: #333;
 }
 
-.profile_container nav ul li i {
+.container nav ul li i {
     margin-right: 10px;
     color: white;
     background-color: var(--secondary-color);
@@ -34,14 +30,13 @@
     align-items: center;
 }
 
-.profile_container nav ul li:hover {
+.container nav ul li:hover {
     background-color: var(--third-color);
     border-radius: 6px;
-    padding-left: 15px;
     margin-left: 5px;
 }
 
-.profile_container nav ul li span {
+.container nav ul li span {
     width: 25px;
     height: 20px;
     display: inline-flex;
@@ -53,7 +48,8 @@
     position: relative;
     margin-right: 10px;
 }
-.profile_container nav ul li span::before {
+
+.container nav ul li span::before {
     content: '';
     position: absolute;
     width: 100%;
@@ -64,10 +60,18 @@
     border-radius: 2px;
 }
 
-.profile_container nav ul.groups {
+.container nav ul.groups {
     margin-top: 20px;
     border-top: 1px solid #ddd;
-}
-.profile_container main {
+} */
+
+.container main {
     flex: 6;
+    margin: 20px 15px 0px;
+}
+
+.current {
+    background-color: var(--third-color);
+    border-radius: 6px;
+    margin-left: 5px;
 }

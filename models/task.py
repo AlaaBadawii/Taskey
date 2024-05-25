@@ -14,10 +14,10 @@ class Task(BaseModel):
     id = db.Column(db.Integer, primary_key=True)
     task_name = db.Column(db.String(255), nullable=False)
     task_title = db.Column(db.String(255), nullable=False)
-    task_description = db.Column(db.Text, nullable=False)
+    task_description = db.Column(db.String(1024), nullable=False)
     due_date = db.Column(db.Date, nullable=True)
     priority = db.Column(db.String(20), nullable=False, default="low")
-    status = db.Column(db.String(20), nullable=False, default="pending")  # Use an Enum field for status
+    status = db.Column(db.String(20), nullable=False, default="pending")
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
     group_id = db.Column(db.Integer, db.ForeignKey('group.id'), nullable=True)

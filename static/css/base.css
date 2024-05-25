@@ -1,8 +1,11 @@
 :root {
-    --main-color: #fff3a9;
-    --secondary-color: #c50c0c;
-    --font-color: #F2EBE5;
-    --third-color: #ffefe5;
+    --main-color: #171819;
+    --secondary-color: #f13a11;
+    --font-color-dark: #404040;
+    --third-color: #909090;
+    --bg-color: #f9f9f9;
+    --font-color-white: #ffffff;
+    --p-color: #666262;
 }
 
 /* font */
@@ -69,8 +72,10 @@ header {
     z-index: 1000;
 }
 
-header img {
-    width: 120px;
+header .logo {
+    font-size: 30px;
+    font-weight: bold;
+    color: var(--secondary-color);
 }
 
 header .menu {
@@ -87,7 +92,7 @@ header ul li {
     font-weight: bold;
     font-size: 20px;
     color: var(--secondary-color);
-    border-radius: 6px;   
+    border-radius: 6px;
 }
 
 header ul li:hover {
@@ -100,8 +105,87 @@ header ul li a {
     color: var(--secondary-color);
 }
 
+
+.container {
+    display: flex;
+    height: calc(100vh - 72.4px);
+    margin-top: 72.4px;
+}
+
+.container nav {
+    flex: 2;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #FAFAFA;
+    max-width: 250px;
+    min-width: 200px;
+    padding: 10px 15px;
+    height: 100%;
+}
+
+.container nav ul li {
+    padding: 10px 15px;
+    transition: 0.3s;
+    margin-bottom: 10px;
+}
+
+.container nav ul li a {
+    color: #333;
+}
+
+.container nav ul li i {
+    margin-right: 10px;
+    color: white;
+    background-color: var(--secondary-color);
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container nav ul li:hover {
+    background-color: var(--third-color);
+    border-radius: 6px;
+    margin-left: 5px;
+}
+
+.container nav ul li span {
+    width: 25px;
+    height: 20px;
+    display: inline-flex;
+    justify-content: center;
+    background-color: var(--secondary-color);
+    align-items: center;
+    color: white;
+    border-radius: 2px;
+    position: relative;
+    margin-right: 10px;
+}
+
+.container nav ul li span::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    top: -5px;
+    left: 0;
+    background-color: var(--secondary-color);
+    border-radius: 2px;
+}
+
+.container nav ul.groups {
+    margin-top: 20px;
+    border-top: 1px solid #ddd;
+}
+
+.container .active {
+    background-color: var(--third-color);
+    border-radius: 6px;
+    margin-left: 5px;
+}
+
 main {
-    margin-top: 100px;
     width: 90%;
-    margin: 0 auto;
+    margin: 72.4px auto;
 }

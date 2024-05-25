@@ -1,0 +1,122 @@
+.upcoming {
+    margin-top: 20px;
+}
+
+.upcoming ul {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+    gap: 20px;
+}
+
+.upcoming ul .task {
+    padding: 15px;
+    border-radius: 6px;
+    background-color: var(--bg-color);
+    box-shadow: 5px 5px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+    color: var(--font-color-white);
+}
+
+.upcoming ul .task.completed {
+    background-color: var(--secondary-color);
+}
+
+.upcoming ul .task .task-name {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: var(--main-color);
+}
+
+.upcoming ul .task .task-info {
+    font-size: 14px;
+    color: var(--font-color-dark);
+    margin-bottom: 10px;
+    font-size: 16px;
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.upcoming ul .task .task-info div {
+    display: flex;
+    gap: 10px;
+}
+
+.upcoming ul .task-content {
+    display: none;
+}
+
+.upcoming ul .task .more a{
+    color: var(--third-color);
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.upcoming ul .task .task-actions {
+    position: absolute;
+    right: 10px;
+    top: 20px;
+    background-color: var(--main-color);
+    width: 120px;
+    height: fit-content;
+    flex-direction: column;
+    border-radius: 6px;
+    box-shadow: 5px 5px 8px rgba(0, 0, 0, 0.1);
+    display: none;
+}
+
+.upcoming ul .task .task-actions:hover {
+    display: flex;
+}
+
+.upcoming ul .task .list {
+    list-style: none;
+    position: absolute;
+    right: 10px;
+    top: 5px;
+    color: var(--secondary-color);
+}
+
+.upcoming ul .task .list:hover + .task-actions {
+    display: flex;}
+.upcoming ul .task .task-actions a {
+    padding: 10px 15px;
+    color: white;
+    width: 100%;
+}
+.upcoming ul .task .task-actions a:nth-of-type(1) {
+    border-bottom: 1px solid var(--secondary-color);
+}
+
+.upcoming ul .task .task-actions a:hover {
+    background-color: var(--secondary-color);
+    border-radius: 6px;
+    color: black;
+}
+
+.upcoming ul .task .task-actions a:hover:nth-of-type(1) {
+    border-radius: 6px 6px 0 0;
+}
+
+.upcoming ul .task .task-actions a:hover:nth-of-type(2) {
+    border-radius: 0 0 6px 6px;
+}
+main {
+    position: relative;
+}
+/* .upcoming ul .full_task_info {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 100;
+    justify-content: center;
+    align-items: center;
+} */

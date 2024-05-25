@@ -1,20 +1,29 @@
-{%extends 'base.html' %}
+{% extends 'base.html' %}
 
-{%block content%}
-<main>
-    <h2>Create a new post</h2>
+{% block content %}
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/create.css') }}">
+{% endblock %}
+<main class="create">
+    <h2>Create a new task</h2>
     <form method="POST" action="{{ url_for('main.create') }}">
-        <div class="form-group">
-            <input type="text" name="task_name" class="form-control" required placeholder="Task name">
-            <input type="text" name="title" class="form-control" required placeholder="Title">
-            <input type="text" name="descrition" class="form-control" required placeholder="Descrition">
-            <input type="date" name="due_date" class="form-control" placeholder="Due date">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        {% endif %}
+        {% endwith %}
+        <input type="text" name="task_name" class="form-control" required placeholder="Task name">
+        <input type="text" name="title" class="form-control" required placeholder="Title">
+        <input type="date" name="due_date" class="form-control" title="Due date">
+        <div class="priority">
+            <span>Priority:</span>
             <input type="radio" name="priority" value="low" id="1"><label for="1">low</label>
             <input type="radio" name="priority" value="medium" id="2"><label for="2">medium</label>
             <input type="radio" name="priority" value="high" id="3"> <label for="3">heigh</label>
-            <input type="text" name="group" placeholder="Group">
         </div>
+        <input type="text" name="group_name" placeholder="Group">
+        <textarea name="task_description" placeholder="Descrition" required></textarea>
         <button type="submit">Create</button>
     </form>
 </main>
-{%endblock%}
+{% endblock %}

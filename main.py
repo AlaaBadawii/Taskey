@@ -13,7 +13,7 @@ def index():
 
 @main.route('/profile')
 def profile():
-    return render_template('profile.html', name=current_user.username)
+    return render_template('profile.html', current_page='profile')
 
 
 @main.route('/profile/create', methods=['GET', 'POST'])
@@ -22,38 +22,37 @@ def create():
         # Retrieve form data
         task_name = request.form.get('task_name')
         title = request.form.get('title')
-        descrition = request.form.get('descrition')
+        task_description = request.form.get('task_description')
         due_date = request.form.get('due_date')
         priority = request.form.get('priority')
-        group = request.form.get('group')
+        group_name = request.form.get('group_name')
 
         # Validate form data
         if not task_name or not due_date or not priority:
             flash('Please fill in all required fields', 'error')
             return redirect(url_for('main.create'))
 
-        # Create a new task
-        try:
-            groub_id = Group.query.filter_by(group_name=group).first().id
-            new_task = Task(
-                task_name=task_name,
-                due_date=due_date,
-                priority=priority,
-                title=title,
-                descrition=descrition,
-                group_id=groub_id,
-                user_id=current_user.id)
+        group = Group.query.filter_by(group_name=group_name).first()
+        if group is None:
+            group = Group(group_name=group_name)
+            group.save()
+        group_id = group.id
+        
+        new_task = Task(
+            task_name=task_name,
+            task_title=title,
+            task_description=task_description,
+            due_date=due_date,
+            priority=priority,
+            group_id=group_id,
+            user_id=current_user.id)
 
-            db.session.add(new_task)
-            db.session.commit()
-            flash('Task created successfully', 'success')
-            return redirect(url_for('main.home'))  # Redirect to home page after task creation
-        except Exception as e:
-            db.session.rollback()
-            flash('An error occurred while creating the task. Please try again.', 'error')
-            return redirect(url_for('main.create'))
+        db.session.add(new_task)
+        db.session.commit()
+        flash('Task created successfully' , 'success')
+        return redirect(url_for('main.profile'), current_page='profile')
 
-    return render_template('create.html')
+    return render_template('create.html', current_page='create')
 
 @main.route('/profile/edit', methods=['GET', 'POST'])
 def edit():
@@ -75,26 +74,30 @@ def edit():
         task.priority = priority
         task.group_name = group
 
-        try:
-            db.session.commit()
-            flash('Task updated successfully', 'success')
-            return redirect(url_for('main.home'))
-        except Exception as e:
-            db.session.rollback()
-            flash('An error occurred while updating the task. Please try again.', 'error')
-            return redirect(url_for('main.edit'))
+        db.session.commit()
+        return redirect(url_for('main.home'), current_page='main')
 
-    return render_template('edit_task.html')
-# @main.route('/profile/delete')
-# def delete():
-#     name=current_user.username
-#     redirect(url_for('main.profile'))
-#     flash('Task Deleted')
+    return render_template('edit.html', current_page='edit')
 
-# @main.route('/profile/tasks')
-# def tasks():
-#     return render_template('tasks.html', name=current_user.username)
+@main.route('/profile/upcoming')
+def upcoming():
+    tasks = Task.query.filter_by(user_id=current_user.id).all()
+    return render_template('upcoming.html', tasks=tasks, current_page='upcoming')
+
+@main.route('/profile/delete')
+def delete():
+    name=current_user.username
+    redirect(url_for('main.profile'))
+    flash('Task Deleted')
+    return render_template('profile.html', name=name)
+
+@main.route('/profile/task/<task_id>')
+def task(task_id):
+    task = Task.query.get(task_id)
+    group_name = Group.query.filter_by(id=task.group_id).first().group_name
+    return render_template('task.html', current_page='task', task=task, group_name=group_name)
 
 # @main.route('/profile/settings')
 # def settings():
 #     return render_template('settings.html', name=current_user.username)
+
