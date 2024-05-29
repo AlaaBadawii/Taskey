@@ -79,21 +79,46 @@ header .logo {
 }
 
 header .menu {
+    top: 50%;
+    right: 30px;
+    color: white;
+    position: absolute;
+    transform: translateY(-50%);
+    font-size: 20px;
+}
+
+/* header .menu:hover + ul {
+    display: flex;
+} */
+
+
+header ul.auth {
+    position: absolute;
+    flex-direction: column;
+    top: 50%;
+    right: 50px;
+    background-color: var(--bg-color);
+    color: white;
+    border-radius: 6px;
+    transform: translateY(10px);
+}
+
+header ul.auth{
     display: none;
 }
 
-header ul {
+header ul.not_auth{
     display: flex;
 }
 
 header ul li {
-    margin-left: 20px;
     padding: 10px 15px;
     font-weight: bold;
     font-size: 20px;
     color: var(--secondary-color);
     border-radius: 6px;
 }
+
 
 header ul li:hover {
     background-color: var(--third-color);
@@ -105,6 +130,9 @@ header ul li a {
     color: var(--secondary-color);
 }
 
+header ul li:hover  a{
+    color: var(--bg-color)
+}
 
 .container {
     display: flex;
@@ -186,6 +214,17 @@ header ul li a {
 }
 
 main {
-    width: 90%;
+    width: 80%;
     margin: 72.4px auto;
+}
+
+.container main {
+    flex: 6;
+    margin: 20px 15px 0px;
+}
+
+.done {
+    background-color: rgb(13, 178, 13);
+    color: white;
+    border-radius: 50%;
 }

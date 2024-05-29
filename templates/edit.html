@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% block content %}
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/edit.css') }}">
+{% endblock %}
+<main class="edit">
+    <h2>{{task.task_name}}</h2>
+    <form action="{{ url_for('main.edit', task_id=task.id) }}" method="POST">
+        <div class="form-group">
+            <label for="task_name">Task Name</label>
+            <input type="text" name="task_name" id="task_name" value="{{ task.task_name }}">
+        </div>
+        <div class="form-group">
+            <label for="task_title">Task Title</label>
+            <input type="text" name="task_title" id="task_title" value="{{ task.task_title }}">
+        </div>
+        <div class="form-group">
+            <label for="due_date">Due Date</label>
+
+            <input type="date" name="due_date" id="due_date" value="{{ task.due_date }}">
+        </div>
+        <div class="form-group">
+            <label for="group">Group</label>
+            <input type="text" name="group" id="group" value="{{ group_name }}">
+        </div>
+        <div class="form-group">
+            <label for="discription">Discription</label>
+            <textarea name="task_description" placeholder="Descrition" required></textarea>
+        </div>
+        <!-- <div class="form-group">
+            <label for="priority">Priority</label>
+            <input type="text" name="priority" id="priority" value="{{ task.priority }}">
+        </div> -->
+        <div class="form-group">
+            <div class="priority">
+                <label>Priority</label>
+                <div>
+                    <input class="piro" type="radio" name="priority" value="low" id="1" {% if task.priority=='low'
+                        %}checked{% endif %}><label for="1">low</label>
+                </div>
+                <div>
+                    <input class="piro" type="radio" name="priority" value="medium" id="2" {% if task.priority=='medium'
+                        %}checked{% endif %}><label for="2">medium</label>
+                </div>
+                <div>
+                    <input class="piro" type="radio" name="priority" value="high" id="3" {% if task.priority=='high'
+                        %}checked{% endif %}> <label for="3">high</label>
+                </div>
+            </div>
+        </div>
+        <button type="submit">Save</button>
+        </div>
+    </form>
+</main>
+{% endblock %}
+{% block group %}
+{% for group in groups %}
+<li class="{% if current_page == group.name %}active{% endif %}">
+    <a href="{{ url_for('main.group', group_id=group.id) }}" class="group">
+        <i class="fa-solid fa-hashtag"></i> {{ group.group_name }}
+    </a>
+</li>
+{% endfor %}
+{% endblock %}

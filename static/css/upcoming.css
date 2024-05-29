@@ -2,12 +2,21 @@
     margin-top: 20px;
 }
 
+.upcoming .nothing {
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--main-color);
+    text-align: center;
+    margin-top: 20px;
+}
+
 .upcoming ul {
     list-style: none;
     padding: 0;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
     gap: 20px;
+    width: 70%;
+    margin: 52.4px auto;
 }
 
 .upcoming ul .task {
@@ -49,6 +58,10 @@
     display: none;
 }
 
+.upcoming ul .task .title {
+    max-width: 65%;
+}
+
 .upcoming ul .task .more a{
     color: var(--third-color);
     font-weight: bold;
@@ -77,7 +90,7 @@
     position: absolute;
     right: 10px;
     top: 5px;
-    color: var(--secondary-color);
+    color: var(--main-color);
 }
 
 .upcoming ul .task .list:hover + .task-actions {
@@ -107,6 +120,24 @@
 main {
     position: relative;
 }
+
+.upcoming ul .more {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 20px;
+
+}
+.upcoming .task_num {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+/* .upcoming ul .more i {
+    font-size: 20px;
+} */
+
 /* .upcoming ul .full_task_info {
     display: none;
     position: fixed;

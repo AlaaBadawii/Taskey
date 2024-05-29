@@ -2,8 +2,55 @@
 
 {% block content %}
 {% block css %}
-<!-- <link rel="stylesheet" href="/static/css/profile.css"> -->
 <link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/upcoming.css') }}">
 {% endblock %}
-<main></main>
+<main class="upcoming">
+    <h2>Today</h2>
+    <div class="task_num">
+        <i class="fa-regular fa-circle-check icon"></i>
+        {{task_num}} tasks
+    </div>
+    {% if task_num == 0 %}
+    <p class="nothing">There's nothing to do today, just have fun!</p>
+    {% endif %}
+    <ul>
+        {% for task in tasks %}
+        <li class="task {%if task.status == 'completed'%} completed {% endif %}">
+            <div>
+                <div class="task-name">
+                    <h3>{{ task.task_name }}</h3>
+                </div>
+                <div class="task-info">
+                    <p class="title">Title: {{ task.task_title }}</p>
+                    <div>
+                        <i class="fa-solid fa-calendar-day"></i>
+                        <p>{{ task.due_date }}</p>
+                    </div>
+                </div>
+                <div class="more">
+                    <a href="{{ url_for('main.task', task_id=task.id ) }}">More...</a>
+                    <a href="{{ url_for('main.complete', task_id=task.id ) }}">
+                        <i class="fa-regular fa-circle-check {% if task.status == 'completed' %} done{% endif %}"></i>
+                    </a>
+                </div>
+            </div>
+            <i class="fa-solid fa-ellipsis list"></i>
+            <div class="task-actions">
+                <a href="{{ url_for('main.edit', task_id=task.id) }}" class="edit">Edit</a>
+                <a href="{{ url_for('main.delete', task_id=task.id) }}" class="delete">Delete</a>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+</main>
+{% endblock %}
+{% block group %}
+{% for group in groups %}
+<li class="{% if current_page == group.name %}active{% endif %}">
+    <a href="{{ url_for('main.group', group_id=group.id) }}" class="group">
+        <i class="fa-solid fa-hashtag"></i> {{ group.group_name }}
+    </a>
+</li>
+{% endfor %}
 {% endblock %}

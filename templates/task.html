@@ -2,38 +2,55 @@
 
 {% block content %}
 {% block css %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/task.css') }}">
 {% endblock %}
 <main class="container">
-    <div>
-        <div class="task-info">
-            <h3>{{ task.task_name }}</h3>
-            <p>{{ task.task_title }}</p>
-            <div>
-                <i class="fa-solid fa-calendar-day"></i>
-                <p>{{ task.due_date }}</p>
+    <div class="task">
+        <div>
+            <div class="head">
+                <i class="fa-solid fa-tachograph-digital"></i>
+                <h3>{{ task.task_name }}</h3>
             </div>
-            <div>
-                <i class="fa-solid fa-hashtag"></i>
-                <p>{{ group_name }}</p>
+            <p>in group {{ group_name }}</p>
+            <div class="task-info">
+                <div class="task-item">
+                    <i class="fa-solid fa-calendar-day"></i>
+                    <p>{{ task.due_date }}</p>
+                </div>
+                <div class="task-item">
+                    <i class="fa-solid fa-hashtag"></i>
+                    <p>{{ group_name }}</p>
+                </div>
+                <div class="task-item">
+                    {% if task.status == 'completed' %}
+                    <i class="fa-solid fa-check"></i>
+                    {% else %}
+                    <i class="fa-solid fa-spinner"></i>
+                    {% endif %}
+                    <p>{{ task.status }}</p>
+                </div>
+                <div class="desc">Description</div>
+                <div class="task-item task-item-desc">
+                    <i class="fa-solid fa-grip-lines"></i>
+                    <p>{{ task.task_description }}</p>
+                </div>
+                <div class="task-item priority">
+                    <i class="fa-solid fa-exclamation-triangle {{task.priority}}"></i>
+                    <p>{{ task.priority }}</p>
+                </div>
+
             </div>
-            <div>
-                <i class="fa-solid fa-check"></i>
-                <p>{{ task.status }}</p>
-            </div>
-            <div>
-                <i class="fa-solid fa-comment"></i>
-                <p>{{ task.task_description }}</p>
-            </div>
-        </div>
-        <div class="task-actions">
-            <a href="{{ url_for('main.edit', task_id=task.id) }}" class="edit">Edit</a>
-            <a href="{{ url_for('main.delete', task_id=task.id) }}" class="delete">Delete</a>
         </div>
     </div>
 </main>
-{% block js %}
-<script src="{{ url_for('static', filename='js/task.js') }}"></script>
 {% endblock %}
+{% block group %}
+{% for group in groups %}
+<li class="{% if current_page == group.name %}active{% endif %}">
+    <a href="{{ url_for('main.group', group_id=group.id) }}" class="group">
+        <i class="fa-solid fa-hashtag"></i> {{ group.group_name }}
+    </a>
+</li>
+{% endfor %}
 {% endblock %}

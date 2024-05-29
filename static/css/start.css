@@ -1,0 +1,18 @@
+.item{
+    padding: 15px 10px;
+        display: flex;
+        gap: 20px;
+        font-size: 20px;
+        background-color: #e06e54;
+        margin-bottom: 10px;
+        border-radius: 8px;
+}
+
+main .box{
+    width: 80%;
+    margin: 52.4px auto;
+}
+
+main .box input{
+    width: 15px;
+}

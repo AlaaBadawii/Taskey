@@ -1,4 +1,97 @@
 .task {
+    margin: 10px;
+    padding: 10px;
+    color: var(--p-color);
 }
 
-.task {}
+.task .head {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.task .head i {
+    font-size: 20px;
+
+}
+
+.task h3 {
+    font-size: 30px;
+    font-weight: 700;
+    margin-bottom: 0px;
+}
+
+.task div+p {
+    font-size: 20px;
+    font-weight: 500;
+    margin-top: 0px;
+}
+
+.task .task-info {
+    margin: 40px 0px 0px 30px;
+    background-color: var(--bg-color);
+    border-radius: 6px;
+    padding: 10px 20px;
+    min-width: 400px;
+    max-width: 600px;
+    box-shadow: 4px 4px 10px 0px #eee;
+    position: relative;
+}
+
+.task .task-info .desc {
+    font-weight: bold;
+    font-size: larger;
+}
+
+.task .task-info .task-item {
+    display: flex;
+    gap: 10px;
+    margin: 10px 0px;
+}
+
+.task .task-info .task-item-desc {
+    margin-left: 20px;
+    margin-bottom: 30px;
+}
+
+.task .task-info .task-item-desc p {
+    font-size: 20px;
+    font-weight: 500;
+    margin-top: 0px;
+}
+
+.task .task-info .priority {
+    position: absolute;
+    bottom: 10px;
+    right: 15px;
+}
+
+.task .task-actions {
+    margin: 30px;
+    font-size: 18px;
+    display: flex;
+    gap: 20px;
+    justify-content: space-around;
+}
+
+.task .task-actions .btn {
+    padding: 10px 20px;
+    border-radius: 6px;
+    background-color: var(--bg-color);
+    color: var(--p-color);
+    font-size: 20px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.low {
+    color: green;
+}
+
+.medium {
+    color: orange;
+}
+
+.high {
+    color: red;
+}

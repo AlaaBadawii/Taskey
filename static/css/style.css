@@ -1,0 +1,42 @@
+.landing {
+    margin: 72.4px auto 0;
+    max-width: 1200px;
+    padding: 0 15px;
+}
+
+
+.landing #hero {
+    padding: 72.4px 15px;
+}
+
+.landing #hero h1 {
+    font-size: 60px;
+    width: 100%;
+    text-align: center;
+    margin: 10px auto;
+    color: var(--main-color);
+}
+
+.landing #hero p {
+    font-size: 30px;
+    width: 100%;
+    text-align: center;
+    margin: 30px auto;
+    color: var(--p-color);
+}
+
+.landing #hero .btn {
+    width: fit-content;
+    display: block;
+    margin: 0px auto;
+    background-color: var(--secondary-color);
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--bg-color);
+}
+
+.landing #hero .btn:hover {
+    background-color: var(--p-color);
+}

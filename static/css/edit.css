@@ -1,0 +1,77 @@
+form {
+    padding: 20px 15px;
+    border-radius: 8px;
+    box-shadow: 4px 6px 12px rgba(0, 0, 0, 0.1);
+    width: 450px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-left: 60px;
+}
+
+form .form-group {
+    margin-bottom: 10px;
+    padding: 10px 15px;
+    display: flex;
+
+}
+
+form .form-group>label {
+    font-weight: bold;
+    font-size: 18px;
+    margin-right: 10px;
+    width: 100px;
+    display: inline-block;
+}
+
+form .form-group input:not(input[type="radio"]),
+form .form-group textarea {
+    background-color: transparent;
+    border: 1px solid var(--main-color);
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: 16px;
+    width: 250px;
+}
+
+form .form-group input:focus,
+form .form-group textarea:focus {
+    outline: none;
+    border-color: var(--secondary-color);
+}
+
+form .form-group input[type="radio"] {
+    margin-right: 5px;
+}
+
+form .form-group textarea {
+    height: 150px;
+}
+
+form .form-group .priority {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+form .form-group .priority>label {
+    margin-right: 40px;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+form button {
+    background-color: var(--main-color);
+    color: var(--bg-color);
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+form button:hover {
+    background-color: var(--secondary-color);
+}

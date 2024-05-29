@@ -16,8 +16,12 @@ class User(BaseModel, UserMixin):
     password_hash = db.Column(db.String(255), nullable=False)  # Renamed to password_hash
     email = db.Column(db.String(120), unique=True, nullable=False)
 
+    groups = db.relationship('Group', backref='user', lazy=True)
+    tasks = db.relationship('Task', backref='task_user', lazy=True)
+
+
     def __repr__(self):
-        return '<User %r>' % self.username
+        return f'<User {self.username}>'
 
     def set_password(self, password):
         self.password_hash = pbkdf2_sha256.hash(password)  # Hashing the password

@@ -1,10 +1,59 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1 class="title">
-    
-</h1>
-<h2 class="subtitle">
+{% block css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+{% endblock %}
+<main class="landing">
+    <section id="hero">
+        <div>
+            <h1>Organize your work and life, finally.</h1>
+            <p>Manage your tasks efficiently and effortlessly.</p>
+            <a href="{{url_for('auth.signup')}}" class="btn">Start for free</a>
+        </div>
+    </section>
+    <section id="features">
+        <div>
+            <h2>Features</h2>
+            <div class="features-list">
+                <div class="feature">
+                    <h3>User Authentication</h3>
+                    <p>Secure login and registration for all users.</p>
+                </div>
+                <div class="feature">
+                    <h3>Task Management</h3>
+                    <p>Create, read, update, and delete tasks with ease.</p>
+                </div>
+                <div class="feature">
+                    <h3>Categories</h3>
+                    <p>Organize your tasks into categories.</p>
+                </div>
+                <div class="feature">
+                    <h3>Prioritization</h3>
+                    <p>Set due dates and priorities for your tasks.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="about">
+        <div>
+            <h2>About Taskey</h2>
+            <p>Taskey is a task management application designed to help users organize their tasks efficiently. Built
+                with Flask, SQLAlchemy, and Flask-Login, Taskey provides a simple and intuitive interface for managing
+                daily tasks.</p>
+        </div>
+    </section>
+    <section id="contact">
+        <div>
+            <h2>Contact Us</h2>
+            <p>For any inquiries, please email us at <a href="mailto:info@taskey.com">info@taskey.com</a>.</p>
+        </div>
+    </section>
+    <footer>
+        <div>
+            <p>&copy; 2024 Taskey. All rights reserved.</p>
+        </div>
+    </footer>
+</main>
 
-</h2>
 {% endblock %}

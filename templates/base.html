@@ -23,9 +23,8 @@
 <body>
     <header>
         {% if not current_user.is_authenticated %}
-        <i class="fa-solid fa-bars menu"></i>
         <a href="{{ url_for('main.index') }}" class="navbar-item logo">
-            taskey
+            Taskey
         </a>
         {% endif %}
         {% if current_user.is_authenticated %}
@@ -33,8 +32,12 @@
             Taskey
         </a>
         {% endif %}
-        <ul>
-            {% if not current_user.is_authenticated %}
+
+        {% if not current_user.is_authenticated %}
+        <ul class="not_auth">
+            <li><a href="#features">Features</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
             <li>
                 <a href="{{ url_for('auth.login') }}" class="navbar-item">
                     Login
@@ -45,8 +48,12 @@
                     Sign Up
                 </a>
             </li>
-            {% endif %}
-            {% if current_user.is_authenticated %}
+        </ul>
+        {% endif %}
+
+        {% if current_user.is_authenticated %}
+        <i class="fa-solid fa-bars menu" onclick="toggleMenu()"></i>
+        <ul id="menu" class="auth">
             <li>
                 <a href="{{ url_for('auth.logout') }}" class="navbar-item">
                     Logout
@@ -62,61 +69,58 @@
                     <!-- Add CSRF token here if required -->
                 </form>
             </li>
-            {% endif %}
         </ul>
+        {% endif %}
     </header>
     <div class="container">
-    {% if current_user.is_authenticated %}
-    <!-- <i class="fa-solid fa-sliders"></i> -->
-    <nav>
-        <ul>
-            <!-- <li>
-                        <a href="#" class="user_setting">
-                            Hello,  {{ current_user.username }}!
-                        </a>
-                    </li> -->
-            <!-- <li>
+        {% if current_user.is_authenticated %}
+        <!-- <i class="fa-solid fa-sliders"></i> -->
+        <nav>
+            <ul>
+                <li lass="{% if current_page == 'create' %}active{% endif %}">
+                    <a href="#" class="user_setting">
+                        <i class="fa-regular fa-user"></i>
+                        {{ current_user.username }}!
+                    </a>
+                </li>
+                <!-- <li>
                         <a href="#" class="search">
                             <i class="fa-solid fa-search"></i> Search
                         </a>
             </li> -->
-            <li class="{% if current_page == 'create' %}active{% endif %}">
-                <a href="{{ url_for('main.create') }}" class="">
-                    <i class="fa-solid fa-plus"></i> Add task
-                </a>
-            </li>
-            <li class="{% if current_page == 'profile' %}active{% endif %}">
-                <a href="{{ url_for('main.profile')  }}">
-                    <span id="current-date"></span> Today
-                </a>
-            </li>
-            <li class="{% if current_page == 'upcoming' %}active{% endif %}">
-                <a href="{{ url_for('main.upcoming')  }}" class="calnder">
-                    <i class="fa-solid fa-calendar-days"></i> Upcoming
-                </a>
-            </li>
-            <ul class="groups">
-                <li class="{% if current_page == 'start' %}active{% endif %}">
-                    <a href="#" class="group">
-                        <i class="fa-solid fa-hand"></i> Getting started
+                <li class="{% if current_page == 'create' %}active{% endif %}">
+                    <a href="{{ url_for('main.create') }}" class="">
+                        <i class="fa-solid fa-plus"></i> Add task
                     </a>
                 </li>
-                {% for group in groups %}
-                <li class="{% if current_page == '{{ group.name }}' %}active{% endif %}">
-                    <a href="#" class="group">
-                        <i class="fa-solid fa-hashtag"></i> {{ group.name }}
+                <li class="{% if current_page == 'profile' %}active{% endif %}">
+                    <a href="{{ url_for('main.profile')  }}">
+                        <span id="current-date"></span> Today
                     </a>
                 </li>
-                {% endfor %}
+                <li class="{% if current_page == 'upcoming' %}active{% endif %}">
+                    <a href="{{ url_for('main.upcoming')  }}" class="calnder">
+                        <i class="fa-solid fa-calendar-days"></i> Upcoming
+                    </a>
+                </li>
+                <ul class="groups">
+                    <li class="{% if current_page == 'start' %}active{% endif %}">
+                        <a href="{{ url_for('main.start')  }}" class="group">
+                            <i class="fa-solid fa-hand"></i> Getting started
+                        </a>
+                    </li>
+                    {% block group %}
+                    {% endblock %}
+                </ul>
             </ul>
-        </ul>
-    </nav>
-    {% endif %}
-    {% block content %}
-    {% endblock %}
+        </nav>
+        {% endif %}
+        {% block content %}
+        {% endblock %}
     </div>
     <script src="{{ url_for('static', filename='js/delete_account.js') }}"></script>
-    <script src="/static/js/calc_date.js"></script>
+    <script src="{{ url_for('static', filename='js/base.js') }}"></script>
+
     {% block js %}
     {% endblock %}
 </body>

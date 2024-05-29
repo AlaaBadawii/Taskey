@@ -1,17 +1,19 @@
 {% extends 'base.html' %}
+
 {% block content %}
 {% block css %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/group.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/upcoming.css') }}">
 {% endblock %}
 <main class="upcoming">
-    <h2>Upcoming</h2>
+    <h2># {{group_name}}</h2>
     <div class="task_num">
         <i class="fa-regular fa-circle-check icon"></i>
         {{task_num}} tasks
     </div>
     {% if task_num == 0 %}
-    <p class="nothing">It's Time To Set Your Goals And Manage Them</p>
+    <p class="nothing">No tasks set over this group yet</p>
     {% endif %}
     <ul>
         {% for task in tasks %}
@@ -37,29 +39,6 @@
                 <a href="{{ url_for('main.delete', task_id=task.id) }}" class="delete">Delete</a>
             </div>
         </li>
-        <!-- <div class="full_task_info">
-            <div class="task-title">
-                <h3>{{ task.task_title }}</h3>
-            </div>
-            <div class="task-info">
-                <p>{{ task.task_description }}</p>
-                <div>
-                    <i class="fa-solid fa-calendar-day"></i>
-                    <p>{{ task.due_date }}</p>
-                </div>
-                <div>
-                    <i class="fa-solid fa-hashtag"></i>
-                    <p>{{ task.group }}</p>
-                </div>
-                <div>
-                    <i class="fa-solid fa-check"></i>
-                    <p>{{ task.status }}</p>
-                </div>
-                <div>
-                    <i class="fa-solid fa-comment"></i>
-                    <p>{{ task.discription }}</p>
-                </div>
-            </div> -->
         {% endfor %}
     </ul>
 </main>

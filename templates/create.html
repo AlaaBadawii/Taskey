@@ -8,13 +8,9 @@
 <main class="create">
     <h2>Create a new task</h2>
     <form method="POST" action="{{ url_for('main.create') }}">
-        {% with messages = get_flashed_messages() %}
-        {% if messages %}
-        {% endif %}
-        {% endwith %}
         <input type="text" name="task_name" class="form-control" required placeholder="Task name">
         <input type="text" name="title" class="form-control" required placeholder="Title">
-        <input type="date" name="due_date" class="form-control" title="Due date">
+        <input type="date" name="due_date" class="form-control" title="Due date" required>
         <div class="priority">
             <span>Priority:</span>
             <input type="radio" name="priority" value="low" id="1"><label for="1">low</label>
@@ -26,4 +22,13 @@
         <button type="submit">Create</button>
     </form>
 </main>
+{% endblock %}
+{% block group %}
+{% for group in groups %}
+<li class="{% if current_page == group.name %}active{% endif %}">
+    <a href="{{ url_for('main.group', group_id=group.id) }}" class="group">
+        <i class="fa-solid fa-hashtag"></i> {{ group.group_name }}
+    </a>
+</li>
+{% endfor %}
 {% endblock %}

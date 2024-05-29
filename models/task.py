@@ -15,15 +15,14 @@ class Task(BaseModel):
     task_name = db.Column(db.String(255), nullable=False)
     task_title = db.Column(db.String(255), nullable=False)
     task_description = db.Column(db.String(1024), nullable=False)
-    due_date = db.Column(db.Date, nullable=True)
+    due_date = db.Column(db.Date, nullable=True, default=datetime.utcnow)
     priority = db.Column(db.String(20), nullable=False, default="low")
     status = db.Column(db.String(20), nullable=False, default="pending")
+    steps = db.Column(db.String(1024), nullable=True)
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
     group_id = db.Column(db.Integer, db.ForeignKey('group.id'), nullable=True)
 
-    group = db.relationship('Group', backref=db.backref('group_tasks', lazy=True))
-    user = db.relationship('User', backref=db.backref('user_tasks', lazy=True))
 
     def __repr__(self):
         return f'<Task {self.id}: {self.task_name}>'

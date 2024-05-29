@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/start.css') }}">
+{% endblock %}
+
+{% block content %}
+<main>
+    <h2>👋🏿 Getting Started</h2>
+    <div class="box">
+        <div class="item">
+            <input type="checkbox">
+            Add your first task by clicking on ➕ Add a task
+        </div>
+        <div class="item">
+            <input type="checkbox">
+            Check your today tasks by clicking on 📅 Today
+        </div>
+        <div class="item">
+            <input type="checkbox">
+            Check your upcoming tasks by clicking on 🔜 Upcoming
+        </div>
+        <div class="item">
+            <input type="checkbox">
+            Check your tasks by project by clicking on 📂 Projects
+        </div>
+        <div class="item">
+            <input type="checkbox">
+            Update your task by clicking top right icon then on ✏️ Edit
+        </div>
+        <div class="item">
+            <input type="checkbox">
+            Delete your task by clicking top right icon then on 🗑️ Delete
+        </div>
+        <div class="item">
+            <input type="checkbox">
+            Check your completed tasks by clicking on ✅ Completed
+        </div>
+    </div>
+</main>
+{% endblock %}
+
+{% block group %}
+{% for group in groups %}
+<li class="{% if current_page == group.name %}active{% endif %}">
+    <a href="{{ url_for('main.group', group_id=group.id) }}" class="group">
+        <i class="fa-solid fa-hashtag"></i> {{ group.group_name }}
+    </a>
+</li>
+{% endfor %}
+{% endblock %}
