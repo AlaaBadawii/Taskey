@@ -2,7 +2,7 @@
 
 {% block content %}
 {% block css %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 {% endblock %}
 <main class="landing">
     <section id="hero">
@@ -15,7 +15,7 @@
             <img src="/static/imges/home_page.png" alt="">
         </div>
     </section>
-    <section id="features">
+    <section id="features" class="landing-container">
         <div>
             <h2>Features</h2>
             <div class="features-list">
@@ -38,20 +38,44 @@
             </div>
         </div>
     </section>
-    <section id="about">
+    <section id="about" class="landing-container">
         <div>
-            <h2>About Taskey</h2>
-            <p>Taskey is a task management application designed to help users organize their tasks efficiently. Built
-                with Flask, SQLAlchemy, and Flask-Login, Taskey provides a simple and intuitive interface for managing
-                daily tasks.</p>
+            <h2>About Us</h2>
+            <p>Taskey is a task management application that helps you organize your work and life. Our mission is to make task management simple and efficient for everyone.</p>
+            <div class="missions">
+                <div class="mission-item">
+                    <i class="fa-solid fa-plus"></i>
+                    Add a task
+                </div>
+                <div class="mission-item">
+                    <i class="fa-solid fa-calendar"></i>
+                    Set a due date
+                </div>
+                <div class="mission-item">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    Give tasks priority level
+                </div>
+                <div class="mission-item">
+                    <i class="fa-solid fa-hashtag"></i>
+                    Organize tasks into categories
+                </div>
+                <div class="mission-item">
+                    <i class="fa-regular fa-circle-check"></i>
+                    Complete the Task
+                </div>
+            </div>
         </div>
-        <video src="/static/"></video>
+        <video id="myVideo" autoplay muted playsinline>
+            <source src="/static/videos/about_video.webm" type="video/webm">
+        </video>
     </section>
     <section id="contact">
         <div>
             <h2>Contact Us</h2>
-            <p>For any inquiries, please email us at <a href="mailto:info@taskey.com">info@taskey.com</a>.</p>
+            <p>Have a question or feedback? We'd love to hear from you! <a href="mailto:info@taskey.com">info@taskey.com</a>.</p>
         </div>
+
+
     </section>
     <footer>
         <div>
@@ -59,5 +83,35 @@
         </div>
     </footer>
 </main>
+<script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+            const video = document.getElementById('myVideo');
 
+            // Function to play video when in view and reset when out of view
+            const handleIntersection = (entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        video.play().catch(error => {
+                            console.log('Video play was prevented:', error);
+                        });
+                    } else {
+                        video.pause();
+                        video.currentTime = 0; // Reset the video to the beginning
+                    }
+                });
+            };
+
+            // Create intersection observer
+            const observer = new IntersectionObserver(handleIntersection, {
+                threshold: 0.5 // Adjust this value as needed
+            });
+
+            // Start observing the video element
+            observer.observe(video);
+        });
+</script>
+
+{% block js %}
+<script src="/path/to/your/landing.js"></script>
+{% endblock %}
 {% endblock %}

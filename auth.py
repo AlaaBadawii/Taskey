@@ -3,6 +3,8 @@ from flask import Blueprint, request, redirect, render_template, flash, url_for
 from flask_login import login_user, logout_user, login_required,current_user
 from email_validator import validate_email, EmailNotValidError
 from .models.user import User
+from .models.group import Group
+from .models.task import Task
 from . import db
 
 
@@ -98,17 +100,35 @@ def logout():
 def delete_user():
     user_id = request.form.get('user_id')
 
-    # Ensure the user exists and the user is authorized to delete the account
+    # Ensure the user exists
     user = User.query.get(user_id)
-    if user:
-        if current_user.id == user.id or current_user.is_admin:  # Assuming you have an is_admin attribute
-            db.session.delete(user)
-            db.session.commit()
-            flash('User account deleted successfully.')
-            return redirect(url_for('main.index'))
-        else:
-            flash('You are not authorized to delete this account.')
-            return redirect(url_for('main.profile'))
-    else:
-        flash('User not found.')
-        return redirect(url_for('main.profile'))
+    if not user:
+        flash('User does not exist.')
+        return redirect(url_for('main.index'))
+
+    # Ensure the user is authorized to delete the account
+    if current_user.id != user.id and not current_user.is_admin:
+        flash('You are not authorized to delete this account.')
+        return redirect(url_for('main.index'))
+
+    # Get all groups associated with the user
+    groups = Group.query.filter_by(user_id=user.id).all()
+
+    # Delete all tasks associated with each group
+    for group in groups:
+        Task.query.filter_by(group_id=group.id).delete()
+
+    # Delete all groups associated with the user
+    Group.query.filter_by(user_id=user.id).delete()
+    db.session.commit()
+
+    # Log out the user if they're deleting their own account
+    if current_user.id == user.id:
+        logout_user()
+
+    # Delete the user
+    db.session.delete(user)
+    db.session.commit()
+
+    flash('User account deleted successfully.')
+    return redirect(url_for('main.index'))

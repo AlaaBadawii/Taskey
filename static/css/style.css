@@ -2,6 +2,10 @@ main {
     margin: 0 !important;
 }
 
+.landing-container {
+    width: 80%;
+    margin: 0 auto;
+}
 
 .landing #hero {
     padding: 72.4px 0;
@@ -41,7 +45,6 @@ main {
 
 .landing #hero .hero_img img {
     width: 80%;
-    /* height: 100%; */
     z-index: 1;
 }
 
@@ -126,6 +129,11 @@ main {
 
 .landing #about {
     padding: 72.4px 0;
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    position: relative;
 }
 
 .landing #about h2 {
@@ -133,6 +141,16 @@ main {
     text-align: center;
     color: var(--main-color);
 }
+
+.landing #about video {
+    border-radius: 8px;
+    transition: 0.3s;
+    width: 50%;
+    border: 1px solid white;
+}
+
+
+
 
 .landing #about p {
     font-size: 20px;
@@ -142,6 +160,46 @@ main {
     max-width: 800px;
 }
 
+.landing #about::before {
+    content: "";
+    position: absolute;
+    top: 10%;
+    left: calc(50% - 1px);
+    width: 2px;
+    height: 80%;
+    max-height: 589px;
+    background-color: var(--secondary-color);
+
+}
+
+.landing #about .missions {
+    margin-top: 20px;
+    padding: 10px 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+}
+
+.landing #about .missions .mission-item {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    padding: 10px 0px;
+    width: 250px;
+    color: var(--p-color);
+    font-size: 18px;
+}
+
+.landing #about .missions .mission-item i {
+    font-size: 20px;
+    color: var(--main-color);
+}
+
+.landing #about .missions .mission-item p {
+    font-size: 18px;
+    color: var(--p-color);
+}
 
 .landing #contact {
     padding: 72.4px 0;
@@ -160,6 +218,7 @@ main {
     margin: 20px auto;
     max-width: 800px;
 }
+
 
 .landing #contact a {
     font-size: 18px;
