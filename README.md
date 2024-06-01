@@ -75,7 +75,15 @@ Taskey is a task management application designed to help users organize their ta
     CREATE DATABASE taskey_db;
     ```
 
-6. **Run the application:**
+6. **Set up the tables:**
+
+    in your parent directory of taskey:
+
+    ```sh
+    python3 -m taskey.create
+    ```
+
+7. **Run the application:**
 
     ```sh
     cd ../
