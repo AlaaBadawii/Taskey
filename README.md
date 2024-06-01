@@ -80,13 +80,13 @@ Taskey is a task management application designed to help users organize their ta
     in your parent directory of taskey:
 
     ```sh
+    cd ../
     python3 -m taskey.create
     ```
 
 7. **Run the application:**
 
     ```sh
-    cd ../
     flask --app=taskey --debug  run
     ```
 
