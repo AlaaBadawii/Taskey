@@ -55,8 +55,13 @@ h4 {
     margin-bottom: 10px;
 }
 
+::selection {
+    background: var(--secondary-color);
+    /* Background color of selected text */
+    color: #ffffff;
+    /* Text color of selected text */
+}
 
-/* Path: static/css/header.css */
 
 header {
     display: flex;
