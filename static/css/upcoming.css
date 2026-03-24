@@ -1,153 +1,483 @@
 .upcoming {
     margin-top: 20px;
+    position: relative;
+}
+
+.upcoming .page-intro {
+    width: min(920px, 92%);
+    margin: 0 auto 32px;
+    padding: 28px 30px;
+    border-radius: 24px;
+    background:
+        radial-gradient(circle at top left, rgba(241, 58, 17, 0.18), transparent 34%),
+        linear-gradient(135deg, var(--panel-color) 0%, color-mix(in srgb, var(--panel-color) 88%, var(--secondary-color) 12%) 100%);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 24px 48px var(--shadow-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 20px;
+}
+
+.upcoming .page-copy {
+    color: var(--p-color);
+    font-size: 16px;
+    max-width: 560px;
+    line-height: 1.6;
+}
+
+.upcoming .task-summary {
+    display: flex;
+    gap: 12px;
+    align-items: stretch;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+.upcoming .summary-card {
+    min-width: 110px;
+    padding: 14px 16px;
+    border-radius: 18px;
+    border: 1px solid var(--border-color);
+    background: var(--panel-color);
+    color: var(--main-color);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    box-shadow: 0 10px 24px var(--shadow-color);
+}
+
+.upcoming .task_num.summary-card {
+    background: var(--main-color);
+    color: var(--header-contrast);
+    border-color: transparent;
+}
+
+.upcoming .summary-card strong {
+    font-size: 24px;
+    line-height: 1;
+    flex-shrink: 0;
+}
+
+.upcoming .summary-label {
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--p-color);
+    text-transform: none;
+    letter-spacing: 0;
+}
+
+.upcoming .task_num.summary-card .summary-label {
+    color: rgba(255, 255, 255, 0.72);
+}
+
+body.theme-dark .upcoming .task_num.summary-card {
+    background: color-mix(in srgb, var(--secondary-color) 18%, var(--panel-color) 82%);
+    color: var(--main-color);
+    border-color: var(--border-color);
+}
+
+body.theme-dark .upcoming .task_num.summary-card .summary-label {
+    color: var(--p-color);
+}
+
+.upcoming .summary-card-done {
+    background: color-mix(in srgb, #16a34a 14%, var(--panel-color) 86%);
+}
+
+.upcoming .summary-card-open {
+    background: color-mix(in srgb, var(--secondary-color) 12%, var(--panel-color) 88%);
 }
 
 .upcoming .nothing {
+    width: min(920px, 92%);
+    margin: 0 auto;
+    padding: 40px 24px;
+    border: 2px dashed var(--border-color);
+    border-radius: 24px;
     font-size: 24px;
     font-weight: bold;
     color: var(--main-color);
     text-align: center;
-    margin-top: 20px;
+    background-color: var(--panel-color);
 }
 
 .upcoming ul {
     list-style: none;
     padding: 0;
     display: grid;
-    gap: 20px;
-    width: 70%;
-    margin: 52.4px auto;
+    gap: 22px;
+    width: min(920px, 92%);
+    margin: 0 auto 42px;
 }
 
 .upcoming ul .task {
-    padding: 15px;
-    border-radius: 6px;
-    background-color: var(--bg-color);
-    box-shadow: 5px 5px 8px rgba(0, 0, 0, 0.1);
+    padding: 28px 30px;
+    border-radius: 24px;
+    background: var(--panel-color);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 8px 18px var(--shadow-color);
     position: relative;
-    color: var(--font-color-white);
+    color: var(--main-color);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+}
+
+.upcoming ul .task:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 18px 34px var(--shadow-color);
+    border-color: var(--border-color);
 }
 
 .upcoming ul .task.completed {
-    background-color: var(--secondary-color);
+    background: color-mix(in srgb, var(--panel-color) 92%, var(--surface-color) 8%);
+}
+
+.upcoming ul .task-body {
+    display: grid;
+    gap: 14px;
+    padding-right: 72px;
+    flex: 1;
+}
+
+.upcoming ul .task-top {
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
 }
 
 .upcoming ul .task .task-name {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 10px;
-    color: var(--main-color);
-}
-
-.upcoming ul .task .task-info {
-    font-size: 14px;
-    color: var(--font-color-dark);
-    margin-bottom: 10px;
-    font-size: 16px;
     display: flex;
-    justify-content: space-between;
-}
-
-
-.upcoming ul .task .task-info div {
-    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
     gap: 10px;
 }
 
-.upcoming ul .task-content {
-    display: none;
+.upcoming ul .task .task-name h3 {
+    margin: 0;
+    color: var(--main-color);
+    font-size: clamp(24px, 2.2vw, 32px);
+    font-weight: 800;
+    line-height: 1.15;
+}
+
+.upcoming ul .task .task-info {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 999px;
+    background:
+        linear-gradient(135deg, color-mix(in srgb, var(--secondary-color) 10%, var(--panel-color) 90%), var(--muted-surface));
+    color: var(--main-color);
+    white-space: nowrap;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1;
+    border: 1px solid color-mix(in srgb, var(--secondary-color) 18%, var(--border-color) 82%);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+
+.upcoming ul .task .task-info i {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(241, 58, 17, 0.14);
+    color: var(--secondary-color);
+    font-size: 11px;
+}
+
+.upcoming ul .task .task-info p,
+.upcoming ul .task .title {
+    margin: 0;
 }
 
 .upcoming ul .task .title {
-    max-width: 65%;
+    color: var(--p-color);
+    font-size: 17px;
+    line-height: 1.55;
+    max-width: 68ch;
 }
 
-.upcoming ul .task .more a{
-    color: var(--third-color);
-    font-weight: bold;
+.upcoming ul .task .more {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-size: 15px;
+}
+
+.upcoming ul .task .more a {
+    color: var(--main-color);
+    font-weight: 700;
     cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    border-radius: 12px;
+    background-color: var(--muted-surface);
+    border: 1px solid var(--border-color);
+    transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.upcoming ul .task .more a:hover {
+    color: var(--main-color);
+    background-color: color-mix(in srgb, var(--secondary-color) 12%, var(--panel-color) 88%);
+    border-color: color-mix(in srgb, var(--secondary-color) 22%, var(--border-color) 78%);
+    box-shadow: 0 10px 18px var(--shadow-color);
+    transform: translateY(-1px);
+}
+
+.upcoming ul .task .more a i {
+    font-size: 12px;
+    color: var(--secondary-color);
 }
 
 .upcoming ul .task .task-actions {
     position: absolute;
-    right: 10px;
-    top: 20px;
-    background-color: var(--main-color);
-    width: 120px;
-    height: fit-content;
+    right: 18px;
+    top: 62px;
+    background: var(--elevated-surface);
+    width: 156px;
     flex-direction: column;
-    border-radius: 6px;
-    box-shadow: 5px 5px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 18px;
+    box-shadow: 0 20px 34px var(--shadow-color);
+    border: 1px solid var(--border-color);
     display: none;
+    overflow: hidden;
+    z-index: 5;
 }
 
-.upcoming ul .task .task-actions:hover {
+.upcoming ul .task .task-actions.is-open {
     display: flex;
 }
 
-.upcoming ul .task .list {
-    list-style: none;
+.upcoming ul .task .task-menu-button {
     position: absolute;
-    right: 10px;
-    top: 5px;
+    right: 22px;
+    top: 22px;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     color: var(--main-color);
+    background-color: transparent;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: background-color 0.2s ease, color 0.2s ease, opacity 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+    opacity: 0;
+    pointer-events: none;
 }
 
-.upcoming ul .task .list:hover + .task-actions {
-    display: flex;}
-.upcoming ul .task .task-actions a {
-    padding: 10px 15px;
-    color: white;
-    width: 100%;
+.upcoming ul .task:hover .task-menu-button,
+.upcoming ul .task:focus-within .task-menu-button,
+.upcoming ul .task .task-menu-button[aria-expanded="true"] {
+    opacity: 1;
+    pointer-events: auto;
 }
+
+.upcoming ul .task .task-menu-button:hover,
+.upcoming ul .task .task-menu-button[aria-expanded="true"] {
+    background-color: color-mix(in srgb, var(--secondary-color) 10%, var(--panel-color) 90%);
+    border-color: color-mix(in srgb, var(--secondary-color) 18%, var(--border-color) 82%);
+    color: var(--secondary-color);
+    transform: translateY(-1px);
+}
+
+.upcoming ul .task .task-menu-button:focus-visible {
+    outline: 2px solid color-mix(in srgb, var(--secondary-color) 42%, transparent 58%);
+    outline-offset: 2px;
+}
+
+.upcoming ul .task .task-actions a {
+    padding: 13px 16px;
+    color: var(--main-color);
+    width: 100%;
+    font-size: 14px;
+    font-weight: 700;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
 .upcoming ul .task .task-actions a:nth-of-type(1) {
-    border-bottom: 1px solid var(--secondary-color);
+    border-bottom: 1px solid var(--border-color);
 }
 
 .upcoming ul .task .task-actions a:hover {
-    background-color: var(--secondary-color);
-    border-radius: 6px;
-    color: black;
+    background-color: color-mix(in srgb, var(--secondary-color) 12%, var(--panel-color) 88%);
+    color: var(--secondary-color);
 }
 
-.upcoming ul .task .task-actions a:hover:nth-of-type(1) {
-    border-radius: 6px 6px 0 0;
+.upcoming ul .task .task-actions .delete:hover {
+    background-color: color-mix(in srgb, #dc2626 10%, var(--panel-color) 90%);
+    color: #dc2626;
 }
 
-.upcoming ul .task .task-actions a:hover:nth-of-type(2) {
-    border-radius: 0 0 6px 6px;
+.upcoming .task_num {
+    display: inline-flex;
+    gap: 10px;
+    align-items: center;
+    padding: 12px 16px;
+    border-radius: 16px;
+    background-color: var(--main-color);
+    color: var(--header-contrast);
+    font-weight: 700;
+    white-space: nowrap;
 }
-main {
+
+.upcoming .task_num .icon {
+    color: var(--secondary-color);
+}
+
+.upcoming ul .task .task-check {
+    width: 28px;
+    height: 28px;
+    margin-top: 3px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #9ca3af;
+    flex-shrink: 0;
     position: relative;
 }
 
-.upcoming ul .more {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 20px;
-
-}
-.upcoming .task_num {
-    display: flex;
-    gap: 10px;
-    align-items: center;
+.upcoming ul .task .task-check .fa-circle-check {
+    position: absolute;
+    color: #16a34a;
+    opacity: 0;
+    transform: scale(0.85);
+    transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
-/* .upcoming ul .more i {
-    font-size: 20px;
-} */
+.upcoming ul .task .task-check .fa-circle {
+    transition: opacity 0.2s ease, transform 0.2s ease, color 0.2s ease;
+}
 
-/* .upcoming ul .full_task_info {
-    display: none;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 100;
-    justify-content: center;
-    align-items: center;
-} */
+.upcoming ul .task .task-check:hover .fa-circle {
+    color: #16a34a;
+}
+
+.upcoming ul .task.completed .task-check .fa-circle {
+    opacity: 0;
+    transform: scale(0.85);
+}
+
+.upcoming ul .task.completed .task-check .fa-circle-check {
+    opacity: 1;
+    transform: scale(1);
+}
+
+@media (max-width: 900px) {
+    .upcoming .page-intro {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .upcoming .task-summary {
+        justify-content: flex-start;
+    }
+
+    .upcoming ul .task .task-info {
+        white-space: nowrap;
+    }
+}
+
+@media (max-width: 640px) {
+    .upcoming .page-intro,
+    .upcoming ul,
+    .upcoming .nothing {
+        width: calc(100% - 24px);
+    }
+
+    .upcoming .page-intro {
+        padding: 22px 20px;
+        border-radius: 20px;
+    }
+
+    .upcoming .task-summary {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .upcoming .summary-card {
+        min-width: 0;
+    }
+
+    .upcoming ul .task {
+        padding: 20px;
+        border-radius: 20px;
+        gap: 14px;
+    }
+
+    .upcoming ul .task-body {
+        padding-right: 0;
+    }
+
+    .upcoming ul .task .task-name {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .upcoming ul .task .task-menu-button {
+        top: 16px;
+        right: 16px;
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .upcoming ul .task .task-actions {
+        position: absolute;
+        top: 56px;
+        right: 16px;
+        width: min(180px, calc(100% - 32px));
+        flex-direction: column;
+        margin-top: 0;
+        border-radius: 14px;
+        box-shadow: 0 18px 28px var(--shadow-color);
+    }
+
+    .upcoming ul .task .task-actions a {
+        text-align: left;
+    }
+
+    .upcoming ul .task .task-actions a:nth-of-type(1) {
+        border-bottom: 1px solid var(--border-color);
+        border-right: none;
+    }
+
+    .upcoming ul .task .more {
+        flex-wrap: wrap;
+    }
+}
+
+@media (max-width: 520px) {
+    .upcoming .task-summary {
+        grid-template-columns: 1fr;
+    }
+
+    .upcoming .summary-card {
+        min-width: 0;
+        width: 100%;
+    }
+
+    .upcoming ul .task {
+        flex-direction: column;
+    }
+
+    .upcoming ul .task .task-check {
+        margin-top: 0;
+    }
+
+    .upcoming ul .task .task-name h3 {
+        font-size: 24px;
+    }
+}

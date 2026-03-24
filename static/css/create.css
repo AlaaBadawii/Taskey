@@ -1,61 +1,558 @@
-main.create h2 {
-    text-align: center;
-    margin-top: 20px;
+main.create {
+    flex: 1;
+    margin: 0;
+    padding: 28px 24px 40px;
+    overflow-y: auto;
+    background:
+        radial-gradient(circle at top left, rgba(241, 58, 17, 0.14), transparent 30%),
+        linear-gradient(180deg, color-mix(in srgb, var(--panel-color) 94%, var(--secondary-color) 6%) 0%, var(--surface-color) 100%);
 }
 
-main.create form {
+.create-shell {
+    max-width: 920px;
+    margin: 0 auto;
+}
+
+.create-intro {
+    margin-bottom: 24px;
+}
+
+.create-intro .eyebrow {
+    color: var(--secondary-color);
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: 12px;
+    font-weight: 800;
+    margin-bottom: 10px;
+}
+
+.create-intro h2 {
+    color: var(--main-color);
+    font-size: clamp(30px, 4vw, 42px);
+    margin-bottom: 12px;
+}
+
+.create-intro .lead {
+    max-width: 620px;
+    color: var(--p-color);
+    font-size: 17px;
+    line-height: 1.7;
+}
+
+.create-form {
+    background: var(--elevated-surface);
+    border: 1px solid var(--border-color);
+    border-radius: 28px;
+    padding: 28px;
+    box-shadow: 0 22px 45px var(--shadow-color);
+    backdrop-filter: blur(10px);
+}
+
+.form-row {
+    display: grid;
+    gap: 18px;
+    margin-bottom: 18px;
+}
+
+.two-columns {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.field {
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    padding: 15px 20px;
-    max-width: 500px;
-    border-radius: 6px;
-    background-color: #eee;
-    margin: 20px auto 0;
-    box-shadow: 5px 5px 8px rgba(0, 0, 0, 0.1)
+    gap: 10px;
 }
 
-main.create form>input,
-main.create form>textarea,
-main.create form .priority {
-    padding: 10px 15px;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    outline: none;
-    max-width: 500px;
-    background-color: white;
-}
-main.create form .priority span{
-    margin-right: 10px;
-    font-weight: bold;
+.field label,
+.priority-field legend {
+    color: var(--main-color);
+    font-size: 15px;
+    font-weight: 700;
 }
 
-main.create form>textarea {
-    resize: none;
-    height: 100px;
+.create-form input[type="text"],
+.create-form textarea {
+    width: 100%;
+    border: 1px solid rgba(23, 24, 25, 0.12);
+    background-color: var(--panel-color);
+    border-radius: 16px;
+    padding: 14px 16px;
+    font-size: 15px;
+    color: var(--main-color);
+    transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
 }
 
-main.create form>input:focus,
-main.create form>textarea:focus,
-main.create form .priority:focus {
-    border-color: var(--secondary-color);
+.date-picker {
+    position: relative;
 }
 
-main.create form>button {
-    padding: 10px 15px;
-    border: none;
-    border-radius: 6px;
-    background-color: var(--secondary-color);
-    color: white;
+.hidden-date-input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.date-picker-toggle {
+    width: 100%;
+    border: 1px solid rgba(23, 24, 25, 0.12);
+    background: var(--panel-color);
+    border-radius: 16px;
+    padding: 14px 16px;
+    color: var(--main-color);
+    font: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    text-align: left;
     cursor: pointer;
-    transition: 0.3s;
-    width: fit-content;
-    margin-left: 50%;
-    transform: translateX(-50%);
-    border: 1px solid var(--secondary-color);
+    transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
 }
 
-main.create form>button:hover {
-    background-color: var(--third-color);
+.date-picker-toggle:hover,
+.date-picker-toggle[aria-expanded="true"] {
+    border-color: rgba(241, 58, 17, 0.45);
+    box-shadow: 0 0 0 4px rgba(241, 58, 17, 0.08);
+    transform: translateY(-1px);
+}
+
+.date-picker.is-invalid .date-picker-toggle {
+    border-color: rgba(197, 59, 28, 0.55);
+    box-shadow: 0 0 0 4px rgba(197, 59, 28, 0.1);
+}
+
+.date-picker-toggle:focus-visible {
+    outline: 3px solid rgba(241, 58, 17, 0.22);
+    outline-offset: 3px;
+}
+
+.date-picker-label {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.date-picker-title {
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
     color: var(--secondary-color);
+    font-weight: 800;
+}
+
+.date-picker-value {
+    font-size: 15px;
+    color: var(--main-color);
+}
+
+.date-picker-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, rgba(241, 58, 17, 0.14) 0%, rgba(255, 106, 61, 0.2) 100%);
+    color: var(--secondary-color);
+    font-size: 17px;
+}
+
+.create-form input[type="text"]::placeholder,
+.create-form textarea::placeholder {
+    color: #9a9a9a;
+}
+
+.create-form input[type="text"]:focus,
+.create-form textarea:focus {
+    outline: none;
+    border-color: rgba(241, 58, 17, 0.65);
+    box-shadow: 0 0 0 4px rgba(241, 58, 17, 0.12);
+    transform: translateY(-1px);
+}
+
+.create-form textarea {
+    min-height: 0;
+    resize: none;
+    overflow: hidden;
+    line-height: 1.6;
+}
+
+.date-picker-panel {
+    position: absolute;
+    top: calc(100% + 12px);
+    left: 0;
+    z-index: 20;
+    width: min(100%, 340px);
+    padding: 18px;
+    border-radius: 24px;
+    border: 1px solid var(--border-color);
+    background: var(--elevated-surface);
+    box-shadow: 0 24px 50px var(--shadow-color);
+    backdrop-filter: blur(12px);
+}
+
+.date-picker-header,
+.date-picker-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.date-picker-header {
+    margin-bottom: 16px;
+}
+
+.date-picker-month {
+    font-weight: 800;
+    color: var(--main-color);
+}
+
+.date-nav,
+.date-footer-btn {
+    border: none;
+    background: transparent;
+    font: inherit;
+    cursor: pointer;
+}
+
+.date-nav {
+    width: 36px;
+    height: 36px;
+    border-radius: 12px;
+    color: var(--main-color);
+    background: var(--soft-surface);
+    transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.date-nav:hover,
+.date-footer-btn:hover {
+    transform: translateY(-1px);
+}
+
+.date-nav:hover {
+    background: rgba(241, 58, 17, 0.12);
+    color: var(--secondary-color);
+}
+
+.date-picker-weekdays,
+.date-picker-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+}
+
+.date-picker-weekdays {
+    margin-bottom: 12px;
+}
+
+.date-picker-weekdays span {
+    text-align: center;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--p-color);
+}
+
+.date-picker-grid {
+    margin-bottom: 16px;
+}
+
+.date-cell {
+    width: 100%;
+    aspect-ratio: 1;
+    border: none;
+    border-radius: 14px;
+    background: var(--soft-surface);
+    color: var(--main-color);
+    font: inherit;
+    cursor: pointer;
+    transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.date-cell:hover {
+    transform: translateY(-1px);
+    background: rgba(241, 58, 17, 0.1);
+    color: var(--secondary-color);
+}
+
+.date-cell.is-muted {
+    opacity: 0.38;
+}
+
+.date-cell.is-today {
+    box-shadow: inset 0 0 0 1px rgba(241, 58, 17, 0.3);
+}
+
+.date-cell.is-selected {
+    background: linear-gradient(135deg, var(--secondary-color) 0%, #ff6a3d 100%);
+    color: #ffffff;
+    box-shadow: 0 12px 22px rgba(241, 58, 17, 0.24);
+}
+
+.date-cell:focus-visible,
+.date-nav:focus-visible,
+.date-footer-btn:focus-visible {
+    outline: 3px solid rgba(241, 58, 17, 0.22);
+    outline-offset: 2px;
+}
+
+.date-footer-btn {
+    padding: 10px 14px;
+    border-radius: 12px;
+    color: var(--p-color);
+    transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.date-footer-btn:hover {
+    background: var(--soft-surface);
+    color: var(--main-color);
+}
+
+.date-footer-btn.primary {
+    background: rgba(241, 58, 17, 0.12);
+    color: var(--secondary-color);
+    font-weight: 700;
+}
+
+.priority-field {
+    border: 1px solid var(--border-color);
+    border-radius: 22px;
+    padding: 20px;
+    margin-bottom: 18px;
+    background: linear-gradient(180deg, var(--elevated-surface) 0%, color-mix(in srgb, var(--panel-color) 88%, var(--soft-surface) 12%) 100%);
+}
+
+.priority-field legend {
+    padding: 0 10px;
+}
+
+.priority-options {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.priority-options input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.priority-pill {
+    border-radius: 999px;
+    padding: 11px 18px;
+    font-weight: 700;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.priority-pill.low {
+    background-color: #eef8f1;
+    color: #1f7a3d;
+}
+
+.priority-pill.medium {
+    background-color: #fff6e7;
+    color: #b86a00;
+}
+
+.priority-pill.high {
+    background-color: #ffebe7;
+    color: #c53b1c;
+}
+
+.priority-options input[type="radio"]:checked + .priority-pill {
+    border-color: currentColor;
+    box-shadow: 0 10px 20px rgba(23, 24, 25, 0.08);
+    transform: translateY(-2px);
+}
+
+.priority-options input[type="radio"]:focus-visible + .priority-pill {
+    outline: 3px solid rgba(241, 58, 17, 0.22);
+    outline-offset: 2px;
+}
+
+.form-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    margin-top: 24px;
+}
+
+.form-footer p {
+    color: var(--p-color);
+    font-size: 14px;
+}
+
+.form-footer button {
+    border: none;
+    border-radius: 16px;
+    padding: 14px 24px;
+    background: linear-gradient(135deg, var(--secondary-color) 0%, #ff6a3d 100%);
+    color: var(--font-color-white);
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+}
+
+.form-footer button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 28px rgba(241, 58, 17, 0.25);
+    filter: saturate(1.05);
+}
+
+.form-footer button:focus-visible {
+    outline: 3px solid rgba(241, 58, 17, 0.22);
+    outline-offset: 3px;
+}
+
+.steps-builder {
+    margin-top: 10px;
+    padding: 22px;
+    border-radius: 24px;
+    border: 1px solid var(--border-color);
+    background: linear-gradient(180deg, var(--elevated-surface) 0%, color-mix(in srgb, var(--panel-color) 88%, var(--soft-surface) 12%) 100%);
+    display: grid;
+    gap: 18px;
+}
+
+.steps-builder-head {
+    display: flex;
+    gap: 18px;
+    align-items: flex-start;
+}
+
+.steps-builder-head h3 {
+    margin: 0 0 8px;
+    color: var(--main-color);
+}
+
+.steps-copy {
+    margin: 0;
+    color: var(--p-color);
+    line-height: 1.6;
+}
+
+.add-step-btn,
+.remove-step-btn {
+    border: none;
+    cursor: pointer;
+}
+
+.add-step-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    width: fit-content;
+    padding: 12px 16px;
+    border-radius: 14px;
+    background-color: var(--muted-surface);
+    color: var(--main-color);
+    font-weight: 700;
+    border: 1px solid var(--border-color);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.add-step-btn:hover,
+.remove-step-btn:hover {
+    transform: translateY(-1px);
+}
+
+.add-step-btn:hover {
+    box-shadow: 0 12px 24px var(--shadow-color);
+}
+
+.steps-list {
+    display: grid;
+    gap: 14px;
+}
+
+.task-step-item {
+    display: grid;
+    gap: 12px;
+    padding: 16px;
+    border-radius: 18px;
+    border: 1px solid var(--border-color);
+    background-color: var(--panel-color);
+}
+
+.task-step-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+}
+
+.step-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 7px 12px;
+    border-radius: 999px;
+    background-color: rgba(241, 58, 17, 0.12);
+    color: var(--secondary-color);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.remove-step-btn {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background-color: var(--muted-surface);
+    color: var(--p-color);
+    border: 1px solid var(--border-color);
+}
+
+.task-step-item input[type="text"] {
+    width: 100%;
+    border: 1px solid rgba(23, 24, 25, 0.12);
+    background-color: var(--panel-color);
+    border-radius: 14px;
+    padding: 13px 15px;
+    font-size: 15px;
+    color: var(--main-color);
+}
+
+@media (max-width: 768px) {
+    main.create {
+        padding: 18px 14px 28px;
+    }
+
+    .create-form {
+        padding: 20px;
+        border-radius: 22px;
+    }
+
+    .two-columns {
+        grid-template-columns: 1fr;
+    }
+
+    .form-footer {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .steps-builder {
+        padding: 18px;
+        border-radius: 20px;
+    }
+
+    .steps-builder-head {
+        flex-direction: column;
+    }
+
+    .form-footer button {
+        width: 100%;
+    }
+
+    .date-picker-panel {
+        width: 100%;
+    }
 }

@@ -6,10 +6,25 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/upcoming.css') }}">
 {% endblock %}
 <main class="upcoming">
-    <h2>Today</h2>
-    <div class="task_num">
-        <i class="fa-regular fa-circle-check icon"></i>
-        {{task_num}} tasks
+    <div class="page-intro">
+        <div>
+            <h2>Today</h2>
+            <p class="page-copy">Focus on what matters now with cards that are easier to read at a glance.</p>
+        </div>
+        <div class="task-summary">
+            <div class="task_num summary-card">
+                <span class="summary-label">Total</span>
+                <strong>{{ task_summary.total_tasks }}</strong>
+            </div>
+            <div class="summary-card summary-card-done">
+                <span class="summary-label">Done</span>
+                <strong>{{ task_summary.completed_tasks }}</strong>
+            </div>
+            <div class="summary-card summary-card-open">
+                <span class="summary-label">To do</span>
+                <strong>{{ task_summary.pending_tasks }}</strong>
+            </div>
+        </div>
     </div>
     {% if task_num == 0 %}
     <p class="nothing">There's nothing to do today, just have fun!</p>
@@ -17,26 +32,29 @@
     <ul>
         {% for task in tasks %}
         <li class="task {%if task.status == 'completed'%} completed {% endif %}">
-            <div>
-                <div class="task-name">
-                    <h3>{{ task.task_name }}</h3>
-                </div>
-                <div class="task-info">
-                    <p class="title">Title: {{ task.task_title }}</p>
-                    <div>
-                        <i class="fa-solid fa-calendar-day"></i>
-                        <p>{{ task.due_date }}</p>
+            <a href="{{ url_for('main.complete', task_id=task.id ) }}" class="task-check" aria-label="Toggle task completion">
+                <i class="fa-regular fa-circle"></i>
+                <i class="fa-solid fa-circle-check"></i>
+            </a>
+            <div class="task-body">
+                <div class="task-top">
+                    <div class="task-name">
+                        <h3>{{ task.task_name }}</h3>
+                        <div class="task-info">
+                            <i class="fa-solid fa-calendar-day"></i>
+                            <p>{{ task.due_date }}</p>
+                        </div>
                     </div>
                 </div>
+                <p class="title">{{ task.task_title }}</p>
                 <div class="more">
-                    <a href="{{ url_for('main.task', task_id=task.id ) }}">More...</a>
-                    <a href="{{ url_for('main.complete', task_id=task.id ) }}">
-                        <i class="fa-regular fa-circle-check {% if task.status == 'completed' %} done{% endif %}"></i>
-                    </a>
+                    <a href="{{ url_for('main.task', task_id=task.id ) }}">View details</a>
                 </div>
             </div>
-            <i class="fa-solid fa-ellipsis list"></i>
-            <div class="task-actions">
+            <button type="button" class="task-menu-button" data-task-menu-toggle aria-expanded="false" aria-label="Open task actions">
+                <i class="fa-solid fa-ellipsis"></i>
+            </button>
+            <div class="task-actions" data-task-menu>
                 <a href="{{ url_for('main.edit', task_id=task.id) }}" class="edit">Edit</a>
                 <a href="{{ url_for('main.delete', task_id=task.id) }}" class="delete">Delete</a>
             </div>

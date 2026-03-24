@@ -1,28 +1,155 @@
 {% extends 'base.html' %}
 
-{% block content %}
 {% block css %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/create.css') }}">
 {% endblock %}
+
+{% block content %}
 <main class="create">
-    <h2>Create a new task</h2>
-    <form method="POST" action="{{ url_for('main.create') }}">
-        <input type="text" name="task_name" class="form-control" required placeholder="Task name">
-        <input type="text" name="title" class="form-control" required placeholder="Title">
-        <input type="date" name="due_date" class="form-control" title="Due date" required>
-        <div class="priority">
-            <span>Priority:</span>
-            <input type="radio" name="priority" value="low" id="1"><label for="1">low</label>
-            <input type="radio" name="priority" value="medium" id="2"><label for="2">medium</label>
-            <input type="radio" name="priority" value="high" id="3"> <label for="3">heigh</label>
+    <section class="create-shell">
+        <div class="create-intro">
+            <p class="eyebrow">Plan your next step</p>
+            <h2>Create a new task</h2>
+            <p class="lead">
+                Add the details once, keep everything organized, and come back to a task that is easy to scan later.
+            </p>
         </div>
-        <input type="text" name="group_name" placeholder="Group">
-        <textarea name="task_description" placeholder="Descrition" required></textarea>
-        <button type="submit">Create</button>
-    </form>
+
+        <form method="POST" action="{{ url_for('main.create') }}" class="create-form">
+            <div class="form-row two-columns">
+                <div class="field">
+                    <label for="task_name">Task name</label>
+                    <input type="text" id="task_name" name="task_name" class="form-control" required
+                        placeholder="Design landing page">
+                </div>
+
+                <div class="field">
+                    <label for="title">Short title</label>
+                    <input type="text" id="title" name="title" class="form-control" required
+                        placeholder="Homepage refresh">
+                </div>
+            </div>
+
+            <div class="form-row two-columns">
+                <div class="field">
+                    <label for="due_date">Due date</label>
+                    <div class="date-picker" data-date-picker>
+                        <input type="hidden" id="due_date" name="due_date" class="hidden-date-input" required>
+                        <button type="button" class="date-picker-toggle" aria-haspopup="dialog" aria-expanded="false"
+                            aria-controls="date-picker-panel" data-date-toggle>
+                            <span class="date-picker-label">
+                                <span class="date-picker-title">Choose a date</span>
+                                <span class="date-picker-value" data-date-value>Select when this task should be done</span>
+                            </span>
+                            <span class="date-picker-icon">
+                                <i class="fa-regular fa-calendar-days"></i>
+                            </span>
+                        </button>
+
+                        <div class="date-picker-panel" id="date-picker-panel" data-date-panel hidden>
+                            <div class="date-picker-header">
+                                <button type="button" class="date-nav" data-date-prev aria-label="Previous month">
+                                    <i class="fa-solid fa-chevron-left"></i>
+                                </button>
+                                <div class="date-picker-month" data-date-month>Month 2026</div>
+                                <button type="button" class="date-nav" data-date-next aria-label="Next month">
+                                    <i class="fa-solid fa-chevron-right"></i>
+                                </button>
+                            </div>
+
+                            <div class="date-picker-weekdays">
+                                <span>Sun</span>
+                                <span>Mon</span>
+                                <span>Tue</span>
+                                <span>Wed</span>
+                                <span>Thu</span>
+                                <span>Fri</span>
+                                <span>Sat</span>
+                            </div>
+
+                            <div class="date-picker-grid" data-date-grid></div>
+
+                            <div class="date-picker-footer">
+                                <button type="button" class="date-footer-btn" data-date-clear>Clear</button>
+                                <button type="button" class="date-footer-btn primary" data-date-today>Today</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label for="group_name">Group</label>
+                    <input type="text" id="group_name" name="group_name" placeholder="Work, Personal, School"
+                        list="group-options">
+                    <datalist id="group-options">
+                        {% for group in groups %}
+                        <option value="{{ group.group_name }}"></option>
+                        {% endfor %}
+                    </datalist>
+                </div>
+            </div>
+
+            <fieldset class="priority-field">
+                <legend>Priority</legend>
+                <div class="priority-options">
+                    <input type="radio" name="priority" value="low" id="priority-low">
+                    <label for="priority-low" class="priority-pill low">Low</label>
+
+                    <input type="radio" name="priority" value="medium" id="priority-medium" checked>
+                    <label for="priority-medium" class="priority-pill medium">Medium</label>
+
+                    <input type="radio" name="priority" value="high" id="priority-high">
+                    <label for="priority-high" class="priority-pill high">High</label>
+                </div>
+            </fieldset>
+
+            <div class="field">
+                <label for="task_description">Description</label>
+                <textarea id="task_description" name="task_description" rows="4" data-auto-grow placeholder="What needs to happen for this task to be done?" required></textarea>
+            </div>
+
+            <section class="steps-builder" data-steps-builder>
+                <div class="steps-builder-head">
+                    <div>
+                        <h3>Task steps</h3>
+                        <p class="steps-copy">Add steps if this task has multiple parts. If you leave it empty, the task will still be created normally.</p>
+                    </div>
+                </div>
+
+                <div class="steps-list" data-steps-list></div>
+
+                <button type="button" class="add-step-btn" data-add-step>
+                    <i class="fa-solid fa-plus"></i>
+                    Add step
+                </button>
+
+                <template id="task-step-template">
+                    <div class="task-step-item">
+                        <div class="task-step-title">
+                            <span class="step-badge">Step</span>
+                            <button type="button" class="remove-step-btn" data-remove-step aria-label="Remove step">
+                                <i class="fa-solid fa-xmark"></i>
+                            </button>
+                        </div>
+                        <input type="hidden" name="task_steps_completed[]" value="false">
+                        <input type="text" name="task_steps[]" data-step-input placeholder="Example: Warm up for 10 minutes">
+                    </div>
+                </template>
+            </section>
+
+            <div class="form-footer">
+                <p>Small, clear tasks are easier to finish and track.</p>
+                <button type="submit">Create task</button>
+            </div>
+        </form>
+    </section>
 </main>
 {% endblock %}
+
+{% block js %}
+<script src="{{ url_for('static', filename='js/create.js') }}"></script>
+{% endblock %}
+
 {% block group %}
 {% for group in groups %}
 <li class="{% if current_page == group.name %}active{% endif %}">

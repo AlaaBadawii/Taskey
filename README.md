@@ -1,106 +1,170 @@
 # Taskey
 
-Taskey is a task management application designed to help users organize their tasks efficiently. Built with Flask, SQLAlchemy, and Flask-Login, Taskey provides a simple and intuitive interface for managing daily tasks.
+Taskey is a Flask task management app for organizing daily work with groups, priorities, due dates, and a cleaner dashboard experience.
 
-## Table of Contents
+## What's New
 
-1. [Features](#features)
-2. [Installation](#installation)
-3. [Usage](#usage)
-4. [Configuration](#configuration)
+- Refreshed UI across the dashboard, task views, and forms
+- New settings page for theme selection, password changes, and profile photo uploads
+- Dark mode support stored per user
+- Task steps/checklists with saved progress
+- Better task summary cards for Today, Upcoming, and Group views
+- Automatic database setup on startup
+- SQLite fallback for local development, with optional MySQL or `DATABASE_URL`
+- Safer account deletion that also removes uploaded profile photos
 
 ## Features
 
-- User authentication and authorization
-- Create, read, update, and delete tasks
-- Organize tasks by categories
-- Set due dates and priorities for tasks
-- Responsive design for mobile and desktop use
+- User signup, login, logout, and account deletion
+- Create, edit, complete, and delete tasks
+- Organize tasks into groups
+- Set due dates, priorities, descriptions, and multi-step checklists
+- Track task counts for total, completed, and pending work
+- Upload a profile picture
+- Switch between light and dark theme
+- Responsive navigation for desktop and mobile
+
+## Tech Stack
+
+- Flask
+- Flask-Login
+- Flask-SQLAlchemy
+- SQLAlchemy
+- Jinja2
+- Vanilla JavaScript
+- MySQL or SQLite
 
 ## Installation
 
 ### Prerequisites
 
 - Python 3.8+
-- MySQL
+- `pip`
+- MySQL only if you want to use MySQL instead of the built-in SQLite fallback
 
 ### Setup
 
-1. **Clone the repository:**
+1. Clone the repository:
 
-    ```sh
-    git clone https://github.com/AlaaBadawii/Taskey
-    cd taskey
-    ```
+   ```sh
+   git clone https://github.com/AlaaBadawii/Taskey
+   cd taskey
+   ```
 
-2. **Create and activate a virtual environment:**
+2. Create and activate a virtual environment:
 
-    ```sh
-    python -m venv venv
-    source venv/bin/activate  # On Windows use `venv\Scripts\activate`
-    ```
+   ```sh
+   python -m venv venv
+   source venv/bin/activate
+   ```
 
-3. **Install the dependencies:**
+   On Windows:
 
-    ```sh
-    pip install -r requirements.txt
-    ```
+   ```sh
+   venv\Scripts\activate
+   ```
 
-4. **Set up the environment variables:**
+3. Install dependencies:
 
-    Create a `.env` file in the root directory of your project and add the following:
+   ```sh
+   pip install -r requirements.txt
+   ```
 
-    ```sh
-    SECRET_KEY=your-secret-key
-    DB_USER=your-db-username
-    DB_PASSWORD=your-db-password
-    DB_HOST=localhost
-    DB_NAME=taskey_db
-    ```
+4. Configure environment variables.
 
-    or just before running the program:
-     ```sh
-    export SECRET_KEY=your-secret-key
-    export DB_USER=your-db-username
-    export DB_PASSWORD=your-db-password
-    export DB_HOST=localhost
-    export DB_NAME=taskey_db
-    ```
+   Minimum:
 
-5. **Set up the database:**
+   ```sh
+   export SECRET_KEY=your-secret-key
+   ```
 
-    Log in to your MySQL server and create the database:
+   Optional database configuration:
 
-    ```sql
-    CREATE DATABASE taskey_db;
-    ```
+   ```sh
+   export DATABASE_URL=sqlite:////absolute/path/to/taskey.db
+   ```
 
-6. **Set up the tables:**
+   Or use MySQL:
 
-    in your parent directory of taskey:
+   ```sh
+   export DB_USER=your-db-username
+   export DB_PASSWORD=your-db-password
+   export DB_HOST=localhost
+   export DB_NAME=taskey_db
+   ```
 
-    ```sh
-    cd ../
-    python3 -m taskey.create
-    ```
+   If no database settings are provided, Taskey will create and use a local SQLite database at `instance/taskey.db`.
 
-7. **Run the application:**
+5. If you are using MySQL, create the database first:
 
-    ```sh
-    flask --app=taskey --debug  run
-    ```
+   ```sql
+   CREATE DATABASE taskey_db;
+   ```
 
-    The application will be available at `http://127.0.0.1:5000`.
+6. Start the app:
+
+   ```sh
+   python app.py
+   ```
+
+   Or with Flask:
+
+   ```sh
+   flask --app app run --debug
+   ```
+
+7. Open the app at `http://127.0.0.1:5000`.
+
+## Database Notes
+
+- Tables are created automatically when the app starts.
+- User settings columns such as `theme` and `profile_image` are added automatically if they do not already exist.
+- `create.py` is still available if you want to trigger table creation manually:
+
+  ```sh
+  python -m taskey.create
+  ```
 
 ## Usage
 
-Once the application is running, you can:
+After signing up and logging in, you can:
 
-1. **Register a new account** or **log in** with an existing account.
-2. **Create new tasks** and organize them into categories.
-3. **Edit or delete tasks** as needed.
-4. **View tasks** in a prioritized list or by due date.
+1. Create tasks with a name, title, description, due date, priority, and group.
+2. Add checklist steps to a task during creation or editing.
+3. Track tasks from Today, Upcoming, and Group pages.
+4. Open a task detail page and save checklist progress.
+5. Change your password, theme, and profile photo from Settings.
+
+## Project Structure
+
+```text
+taskey/
+├── app.py
+├── __init__.py
+├── auth.py
+├── main.py
+├── create.py
+├── models/
+├── static/
+│   ├── css/
+│   ├── js/
+│   └── uploads/
+└── templates/
+```
 
 ## Configuration
 
-The application configuration is managed through environment variables. Ensure that you have all necessary variables set in your environment or in a `.env` file as described in the installation section.
+Supported environment variables:
+
+- `SECRET_KEY`
+- `DATABASE_URL`
+- `DB_USER`
+- `DB_PASSWORD`
+- `DB_HOST`
+- `DB_NAME`
+
+## Notes
+
+- Profile images are stored under `static/uploads/profile_pictures/`.
+- Allowed profile image formats are `png`, `jpg`, `jpeg`, `gif`, and `webp`.
+- The current default local database path is `instance/taskey.db`.

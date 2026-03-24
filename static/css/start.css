@@ -1,11 +1,12 @@
 .item{
     padding: 15px 10px;
-        display: flex;
-        gap: 20px;
-        font-size: 20px;
-        background-color: #e06e54;
-        margin-bottom: 10px;
-        border-radius: 8px;
+    display: flex;
+    gap: 20px;
+    font-size: 20px;
+    background-color: color-mix(in srgb, var(--secondary-color) 82%, var(--panel-color) 18%);
+    color: var(--header-contrast);
+    margin-bottom: 10px;
+    border-radius: 8px;
 }
 
 main .box{

@@ -5,46 +5,97 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/task.css') }}">
 {% endblock %}
-<main class="container">
-    <div class="task">
-        <div>
-            <div class="head">
-                <i class="fa-solid fa-tachograph-digital"></i>
-                <h3>{{ task.task_name }}</h3>
+<main class="task-page">
+    <section class="task-detail">
+        <div class="task-header">
+            <div class="task-heading">
+                <h1>{{ task.task_name }}</h1>
             </div>
-            <p>in group {{ group_name }}</p>
-            <div class="task-info">
+        </div>
+
+        <div class="task-card">
+            <div class="task-meta">
                 <div class="task-item">
                     <i class="fa-solid fa-calendar-day"></i>
-                    <p>{{ task.due_date }}</p>
+                    <div class="task-item-copy">
+                        <span class="task-label">Due date</span>
+                        <p>{{ task.due_date }}</p>
+                    </div>
                 </div>
                 <div class="task-item">
                     <i class="fa-solid fa-hashtag"></i>
-                    <p>{{ group_name }}</p>
+                    <div class="task-item-copy">
+                        <span class="task-label">Group</span>
+                        <p>{{ group_name }}</p>
+                    </div>
                 </div>
                 <div class="task-item">
-                    {% if task.status == 'completed' %}
-                    <i class="fa-solid fa-check"></i>
-                    {% else %}
-                    <i class="fa-solid fa-spinner"></i>
-                    {% endif %}
-                    <p>{{ task.status }}</p>
+                    <i class="fa-solid fa-list-check"></i>
+                    <div class="task-item-copy">
+                        <span class="task-label">Status</span>
+                        <p class="status-badge {% if task.status == 'completed' %}status-completed{% elif task.status == 'in progress' %}status-in-progress{% else %}status-pending{% endif %}">
+                            {{ task.status }}
+                        </p>
+                    </div>
                 </div>
-                <div class="desc">Description</div>
-                <div class="task-item task-item-desc">
-                    <i class="fa-solid fa-grip-lines"></i>
-                    <p>{{ task.task_description }}</p>
+                <div class="task-item">
+                    <i class="fa-solid fa-exclamation"></i>
+                    <div class="task-item-copy">
+                        <span class="task-label">Priority</span>
+                        <p class="priority-badge priority-{{ task.priority }}">{{ task.priority }}</p>
+                    </div>
                 </div>
-                <div class="task-item priority">
-                    <i class="fa-solid fa-exclamation-triangle {{task.priority}}"></i>
-                    <p>{{ task.priority }}</p>
-                </div>
+            </div>
 
+            <section class="task-description">
+                <h2>Description</h2>
+                <p class="{% if not task.task_description %}description-placeholder{% endif %}">
+                    {{ task.task_description if task.task_description else 'No description added' }}
+                </p>
+            </section>
+
+            {% if task_steps %}
+            <form action="{{ url_for('main.save_task_steps', task_id=task.id) }}" method="POST" class="task-steps-form" data-task-steps-form>
+                <section class="task-steps">
+                    <div class="task-steps-head">
+                        <h2>Steps</h2>
+                        <p>Check the steps you finished, then save your progress.</p>
+                    </div>
+                    <ol>
+                        {% for step in task_steps %}
+                        <li class="{% if step.completed %}is-completed{% endif %}" data-step-item>
+                            <label class="task-step-toggle">
+                                <input type="checkbox" class="task-step-input" name="completed_step_indices[]" value="{{ loop.index0 }}" {% if step.completed %}checked{% endif %}>
+                                <span class="step-check">
+                                    <i class="fa-regular fa-circle"></i>
+                                    <i class="fa-solid fa-circle-check"></i>
+                                </span>
+                                <span class="step-text">{{ step.text }}</span>
+                            </label>
+                        </li>
+                        {% endfor %}
+                    </ol>
+                    <div class="task-steps-actions" data-step-actions hidden>
+                        <p class="task-steps-note">You have unsaved step changes.</p>
+                        <button type="submit" class="btn btn-primary">Save steps</button>
+                    </div>
+                </section>
+            </form>
+            {% endif %}
+
+            <div class="task-actions">
+                <a href="{{ url_for('main.edit', task_id=task.id) }}" class="btn btn-primary">Edit task</a>
+                <a href="{{ url_for('main.delete', task_id=task.id) }}" class="btn btn-danger">Delete task</a>
             </div>
         </div>
-    </div>
+    </section>
 </main>
 {% endblock %}
+
+{% block js %}
+<script src="{{ url_for('static', filename='js/task.js') }}"></script>
+{% endblock %}
+
 {% block group %}
 {% for group in groups %}
 <li class="{% if current_page == group.name %}active{% endif %}">

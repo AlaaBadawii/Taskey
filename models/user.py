@@ -15,6 +15,8 @@ class User(BaseModel, UserMixin):
     username = db.Column(db.String(80), unique=True, nullable=False)
     password_hash = db.Column(db.String(255), nullable=False)  # Renamed to password_hash
     email = db.Column(db.String(120), unique=True, nullable=False)
+    theme = db.Column(db.String(20), nullable=False, default='light')
+    profile_image = db.Column(db.String(255), nullable=True)
 
     groups = db.relationship('Group', backref='user', lazy=True)
     tasks = db.relationship('Task', backref='task_user', lazy=True)

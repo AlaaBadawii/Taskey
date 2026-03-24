@@ -1,59 +1,167 @@
 {% extends 'base.html' %}
-{% block content %}
+
 {% block css %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/edit.css') }}">
 {% endblock %}
-<main class="edit">
-    <h2>{{task.task_name}}</h2>
-    <form action="{{ url_for('main.edit', task_id=task.id) }}" method="POST">
-        <div class="form-group">
-            <label for="task_name">Task Name</label>
-            <input type="text" name="task_name" id="task_name" value="{{ task.task_name }}">
-        </div>
-        <div class="form-group">
-            <label for="task_title">Task Title</label>
-            <input type="text" name="task_title" id="task_title" value="{{ task.task_title }}">
-        </div>
-        <div class="form-group">
-            <label for="due_date">Due Date</label>
 
-            <input type="date" name="due_date" id="due_date" value="{{ task.due_date }}">
+{% block content %}
+<main class="edit-page">
+    <section class="edit-shell">
+        <div class="edit-intro">
+            <p class="eyebrow">Refine the details</p>
+            <a href="{{ url_for('main.task', task_id=task.id) }}" class="edit-back">
+                <i class="fa-solid fa-arrow-left"></i>
+                Back to task
+            </a>
+            <h1>{{ task.task_name }}</h1>
+            <p class="lead">Update the task details, adjust the date, and keep every step aligned with your plan.</p>
         </div>
-        <div class="form-group">
-            <label for="group">Group</label>
-            <input type="text" name="group" id="group" value="{{ group_name }}">
-        </div>
-        <div class="form-group">
-            <label for="discription">Discription</label>
-            <textarea name="task_description" placeholder="Descrition" required></textarea>
-        </div>
-        <!-- <div class="form-group">
-            <label for="priority">Priority</label>
-            <input type="text" name="priority" id="priority" value="{{ task.priority }}">
-        </div> -->
-        <div class="form-group">
-            <div class="priority">
-                <label>Priority</label>
-                <div>
-                    <input class="piro" type="radio" name="priority" value="low" id="1" {% if task.priority=='low'
-                        %}checked{% endif %}><label for="1">low</label>
+
+        <form action="{{ url_for('main.edit', task_id=task.id) }}" method="POST" class="edit-form">
+            <div class="edit-fields">
+                <div class="field-row">
+                    <label for="task_name">Task title</label>
+                    <input type="text" name="task_name" id="task_name" value="{{ task.task_name }}" required>
                 </div>
-                <div>
-                    <input class="piro" type="radio" name="priority" value="medium" id="2" {% if task.priority=='medium'
-                        %}checked{% endif %}><label for="2">medium</label>
+
+                <div class="field-row">
+                    <label for="task_title">Supporting note</label>
+                    <input type="text" name="task_title" id="task_title" value="{{ task.task_title }}" required>
                 </div>
-                <div>
-                    <input class="piro" type="radio" name="priority" value="high" id="3" {% if task.priority=='high'
-                        %}checked{% endif %}> <label for="3">high</label>
+
+                <div class="field-row">
+                    <label for="group_id">Group</label>
+                    <select name="group_id" id="group_id" required>
+                        {% for group in groups %}
+                        <option value="{{ group.id }}" {% if group.id == task.group_id %}selected{% endif %}>
+                            {{ group.group_name }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="field-row">
+                    <label for="due_date">Due date</label>
+                    <div class="date-picker" data-date-picker>
+                        <input type="hidden" id="due_date" name="due_date" class="hidden-date-input" value="{{ task.due_date }}" required>
+                        <button type="button" class="date-picker-toggle" aria-haspopup="dialog" aria-expanded="false"
+                            aria-controls="edit-date-picker-panel" data-date-toggle>
+                            <span class="date-picker-label">
+                                <span class="date-picker-title">Choose a date</span>
+                                <span class="date-picker-value" data-date-value>Select when this task should be done</span>
+                            </span>
+                            <span class="date-picker-icon">
+                                <i class="fa-regular fa-calendar-days"></i>
+                            </span>
+                        </button>
+
+                        <div class="date-picker-panel" id="edit-date-picker-panel" data-date-panel hidden>
+                            <div class="date-picker-header">
+                                <button type="button" class="date-nav" data-date-prev aria-label="Previous month">
+                                    <i class="fa-solid fa-chevron-left"></i>
+                                </button>
+                                <div class="date-picker-month" data-date-month>Month 2026</div>
+                                <button type="button" class="date-nav" data-date-next aria-label="Next month">
+                                    <i class="fa-solid fa-chevron-right"></i>
+                                </button>
+                            </div>
+
+                            <div class="date-picker-weekdays">
+                                <span>Sun</span>
+                                <span>Mon</span>
+                                <span>Tue</span>
+                                <span>Wed</span>
+                                <span>Thu</span>
+                                <span>Fri</span>
+                                <span>Sat</span>
+                            </div>
+
+                            <div class="date-picker-grid" data-date-grid></div>
+
+                            <div class="date-picker-footer">
+                                <button type="button" class="date-footer-btn" data-date-clear>Clear</button>
+                                <button type="button" class="date-footer-btn primary" data-date-today>Today</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="field-row priority-row">
+                    <label>Priority</label>
+                    <div class="priority-options">
+                        <input type="radio" name="priority" value="low" id="edit-priority-low" {% if task.priority == 'low' %}checked{% endif %}>
+                        <label for="edit-priority-low" class="priority-pill low">Low</label>
+
+                        <input type="radio" name="priority" value="medium" id="edit-priority-medium" {% if task.priority == 'medium' %}checked{% endif %}>
+                        <label for="edit-priority-medium" class="priority-pill medium">Medium</label>
+
+                        <input type="radio" name="priority" value="high" id="edit-priority-high" {% if task.priority == 'high' %}checked{% endif %}>
+                        <label for="edit-priority-high" class="priority-pill high">High</label>
+                    </div>
+                </div>
+
+                <div class="field-row field-row-description">
+                    <label for="task_description">Description</label>
+                    <textarea name="task_description" id="task_description" rows="4" data-auto-grow placeholder="What needs to happen for this task to be done?" required>{{ task.task_description }}</textarea>
                 </div>
             </div>
-        </div>
-        <button type="submit">Save</button>
-        </div>
-    </form>
+
+            <section class="steps-builder" data-steps-builder>
+                <div class="steps-builder-head">
+                    <div>
+                        <h3>Steps</h3>
+                        <p class="steps-copy">Add or remove steps if this task has multiple parts.</p>
+                    </div>
+                </div>
+
+                <div class="steps-list" data-steps-list>
+                    {% for step in task_steps %}
+                    <div class="task-step-item">
+                        <div class="task-step-title">
+                            <span class="step-badge">Step {{ loop.index }}</span>
+                            <button type="button" class="remove-step-btn" data-remove-step aria-label="Remove step">
+                                <i class="fa-solid fa-xmark"></i>
+                            </button>
+                        </div>
+                        <input type="hidden" name="task_steps_completed[]" value="{{ 'true' if step.completed else 'false' }}">
+                        <input type="text" name="task_steps[]" value="{{ step.text }}" data-step-input placeholder="Example: Warm up for 10 minutes">
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <button type="button" class="add-step-btn" data-add-step>
+                    <i class="fa-solid fa-plus"></i>
+                    Add step
+                </button>
+
+                <template id="task-step-template">
+                    <div class="task-step-item">
+                        <div class="task-step-title">
+                            <span class="step-badge">Step</span>
+                            <button type="button" class="remove-step-btn" data-remove-step aria-label="Remove step">
+                                <i class="fa-solid fa-xmark"></i>
+                            </button>
+                        </div>
+                        <input type="hidden" name="task_steps_completed[]" value="false">
+                        <input type="text" name="task_steps[]" data-step-input placeholder="Example: Warm up for 10 minutes">
+                    </div>
+                </template>
+            </section>
+
+            <div class="edit-actions">
+                <a href="{{ url_for('main.task', task_id=task.id) }}" class="btn btn-secondary">Cancel</a>
+                <button type="submit" class="btn btn-primary">Save changes</button>
+            </div>
+        </form>
+    </section>
 </main>
 {% endblock %}
+
+{% block js %}
+<script src="{{ url_for('static', filename='js/create.js') }}"></script>
+{% endblock %}
+
 {% block group %}
 {% for group in groups %}
 <li class="{% if current_page == group.name %}active{% endif %}">

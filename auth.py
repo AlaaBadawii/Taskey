@@ -1,5 +1,7 @@
+from pathlib import Path
+
 from sqlite3 import IntegrityError
-from flask import Blueprint, request, redirect, render_template, flash, url_for
+from flask import Blueprint, current_app, request, redirect, render_template, flash, url_for
 from flask_login import login_user, logout_user, login_required,current_user
 from email_validator import validate_email, EmailNotValidError
 from .models.user import User
@@ -13,6 +15,9 @@ auth = Blueprint('auth', __name__)
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('main.profile'))
+
     if request.method == 'GET':
         return render_template('login.html')
     else:
@@ -34,6 +39,9 @@ def login():
 
 @auth.route('/signup', methods=['GET', 'POST'])
 def signup():
+    if current_user.is_authenticated:
+        return redirect(url_for('main.profile'))
+
     if request.method == 'GET':
         return render_template('signup.html')
 
@@ -107,9 +115,11 @@ def delete_user():
         return redirect(url_for('main.index'))
 
     # Ensure the user is authorized to delete the account
-    if current_user.id != user.id and not current_user.is_admin:
+    if current_user.id != user.id:
         flash('You are not authorized to delete this account.')
         return redirect(url_for('main.index'))
+
+    profile_image = user.profile_image
 
     # Get all groups associated with the user
     groups = Group.query.filter_by(user_id=user.id).all()
@@ -129,6 +139,11 @@ def delete_user():
     # Delete the user
     db.session.delete(user)
     db.session.commit()
+
+    if profile_image:
+        image_file = Path(current_app.static_folder) / profile_image
+        if image_file.exists():
+            image_file.unlink()
 
     flash('User account deleted successfully.')
     return redirect(url_for('main.index'))

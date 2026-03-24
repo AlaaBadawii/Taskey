@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/settings.css') }}">
+{% endblock %}
+
+{% block content %}
+<main class="settings-page">
+    <section class="settings-hero">
+        <div class="settings-profile">
+            {% if current_user.profile_image %}
+            <img src="{{ url_for('static', filename=current_user.profile_image) }}" alt="{{ current_user.username }} profile picture" class="settings-avatar">
+            {% else %}
+            <div class="settings-avatar settings-avatar-fallback">{{ current_user.username[:1]|upper }}</div>
+            {% endif %}
+            <div>
+                <h2>Settings</h2>
+                <p>Update your preferences, protect your account, and keep your profile looking the way you want.</p>
+            </div>
+        </div>
+        <div class="settings-summary">
+            <span>{{ current_user.email }}</span>
+            <strong>{{ current_user.theme|capitalize }} mode</strong>
+        </div>
+    </section>
+
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <div class="settings-flashes">
+        {% for message in messages %}
+        <p>{{ message }}</p>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% endwith %}
+
+    <section class="settings-grid">
+        <article class="settings-card">
+            <h3>Appearance</h3>
+            <p>Choose how Taskey should look when you open it.</p>
+            <form action="{{ url_for('main.update_preferences') }}" method="POST" class="settings-form">
+                <label for="theme">Theme</label>
+                <div class="select-wrap">
+                    <select id="theme" name="theme" class="settings-select">
+                        <option value="light" {% if current_user.theme == 'light' %}selected{% endif %}>Light mode</option>
+                        <option value="dark" {% if current_user.theme == 'dark' %}selected{% endif %}>Dark mode</option>
+                    </select>
+                    <i class="fa-solid fa-chevron-down select-icon"></i>
+                </div>
+                <button type="submit">Save preferences</button>
+            </form>
+        </article>
+
+        <article class="settings-card">
+            <h3>Profile Photo</h3>
+            <p>Upload a new image to personalize the navbar and your account area.</p>
+            <form action="{{ url_for('main.update_profile_photo') }}" method="POST" enctype="multipart/form-data" class="settings-form">
+                <label for="profile_image">Choose image</label>
+                <div class="file-input-wrap">
+                    <label for="profile_image" class="file-picker-btn">Choose file</label>
+                    <input type="file" id="profile_image" name="profile_image" class="settings-file-input" accept=".png,.jpg,.jpeg,.gif,.webp" required>
+                    <span class="file-input-hint">PNG, JPG, GIF, or WEBP</span>
+                </div>
+                <button type="submit">Update picture</button>
+            </form>
+        </article>
+
+        <article class="settings-card">
+            <h3>Password</h3>
+            <p>Change your password whenever you want a fresh login.</p>
+            <form action="{{ url_for('main.update_password') }}" method="POST" class="settings-form">
+                <label for="current_password">Current password</label>
+                <input type="password" id="current_password" name="current_password" required>
+
+                <label for="new_password">New password</label>
+                <input type="password" id="new_password" name="new_password" minlength="8" required>
+
+                <label for="confirm_password">Confirm new password</label>
+                <input type="password" id="confirm_password" name="confirm_password" minlength="8" required>
+
+                <button type="submit">Change password</button>
+            </form>
+        </article>
+
+        <article class="settings-card settings-card-danger">
+            <h3>Delete Account</h3>
+            <p>This removes your account, groups, and tasks. This action cannot be undone.</p>
+            <form action="{{ url_for('auth.delete_user') }}" method="POST" class="settings-form">
+                <input type="hidden" name="user_id" value="{{ current_user.id }}">
+                <button type="submit" class="danger-btn">Delete account</button>
+            </form>
+        </article>
+    </section>
+</main>
+{% endblock %}
+
+{% block group %}
+{% for group in groups %}
+<li class="{% if current_page == group.id %}active{% endif %}">
+    <a href="{{ url_for('main.group', group_id=group.id) }}" class="group">
+        <i class="fa-solid fa-hashtag"></i> {{ group.group_name }}
+    </a>
+</li>
+{% endfor %}
+{% endblock %}

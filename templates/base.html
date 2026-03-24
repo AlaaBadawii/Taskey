@@ -18,7 +18,7 @@
     {% endblock %}
 </head>
 
-<body>
+<body class="theme-{{ current_user.theme if current_user.is_authenticated else 'light' }} page-{{ current_page if current_page is defined else 'default' }}">
     <header>
         {% if not current_user.is_authenticated %}
         <a href="{{ url_for('main.index') }}" class="navbar-item logo">
@@ -49,35 +49,70 @@
         </ul>
         {% endif %}
 
+        {% if current_user.is_authenticated and current_page != 'index' %}
+        <button type="button" id="sidebar-toggle" class="sidebar-toggle" aria-expanded="false" aria-controls="sidebar-nav">
+            <i class="fa-solid fa-bars"></i>
+            <span>Menu</span>
+        </button>
+        {% endif %}
         {% if current_user.is_authenticated %}
-        <i class="fa-solid fa-bars menu" onclick="toggleMenu()"></i>
-        <ul id="menu" class="auth">
-            <li>
-                <a href="{{ url_for('auth.logout') }}" class="navbar-item">
-                    Logout
-                </a>
-            </li>
-            <li>
-                <a href="#" onclick="confirmDelete(event)" class="navbar-item">
-                    Delete Account
-                </a>
-                <form id="delete-user-form" action="{{ url_for('auth.delete_user') }}" method="POST"
-                    style="display: none;">
-                    <input type="hidden" name="user_id" value="{{ current_user.id }}">
-                    <!-- Add CSRF token here if required -->
-                </form>
-            </li>
-        </ul>
+        <div class="header-account">
+            <button type="button" id="menu-toggle" class="menu-toggle" aria-expanded="false" aria-controls="menu">
+                {% if current_user.profile_image %}
+                <img src="{{ url_for('static', filename=current_user.profile_image) }}" alt="{{ current_user.username }} profile picture" class="header-avatar">
+                {% else %}
+                <span class="header-avatar header-avatar-fallback">{{ current_user.username[:1]|upper }}</span>
+                {% endif %}
+                <span class="menu-toggle-copy">
+                    <strong>{{ current_user.username }}</strong>
+                    <small>Account</small>
+                </span>
+                <i class="fa-solid fa-chevron-down menu-toggle-icon"></i>
+            </button>
+            <div id="menu" class="auth-menu" aria-hidden="true">
+                <div class="auth-menu-header">
+                    <p>{{ current_user.username }}</p>
+                    <span>{{ current_user.email }}</span>
+                </div>
+                <div class="auth-menu-section">
+                    <a href="{{ url_for('main.index') }}" class="auth-menu-link">
+                        <i class="fa-solid fa-house"></i>
+                        <span>Home</span>
+                    </a>
+                    <a href="{{ url_for('main.start') }}" class="auth-menu-link">
+                        <i class="fa-regular fa-compass"></i>
+                        <span>Getting started</span>
+                    </a>
+                </div>
+                <div class="auth-menu-section auth-menu-section-account">
+                    <a href="{{ url_for('main.settings') }}" class="auth-menu-link">
+                        <i class="fa-solid fa-gear"></i>
+                        <span>Settings</span>
+                    </a>
+                    <a href="{{ url_for('auth.logout') }}" class="auth-menu-link">
+                        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                        <span>Logout</span>
+                    </a>
+                </div>
+            </div>
+        </div>
         {% endif %}
     </header>
     <div class="container">
-        {% if current_user.is_authenticated %}
-        <!-- <i class="fa-solid fa-sliders"></i> -->
-        <nav>
+        {% if current_user.is_authenticated and current_page != 'index' %}
+        <button type="button" id="sidebar-close" class="sidebar-close" aria-label="Close navigation">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+        <div id="sidebar-backdrop" class="sidebar-backdrop"></div>
+        <nav id="sidebar-nav">
             <ul>
-                <li lass="{% if current_page == 'create' %}active{% endif %}">
-                    <a href="#" class="user_setting">
-                        <i class="fa-regular fa-user"></i>
+                <li class="{% if current_page == 'settings' %}active{% endif %}">
+                    <a href="{{ url_for('main.settings') }}" class="user_setting">
+                        {% if current_user.profile_image %}
+                        <img src="{{ url_for('static', filename=current_user.profile_image) }}" alt="{{ current_user.username }} profile picture" class="user_avatar">
+                        {% else %}
+                        <span class="user_avatar user_avatar-fallback">{{ current_user.username[:1]|upper }}</span>
+                        {% endif %}
                         {{ current_user.username }}!
                     </a>
                 </li>
@@ -96,6 +131,13 @@
                         <span id="current-date"></span> Today
                     </a>
                 </li>
+                {% if current_page == 'settings' %}
+                <li class="{% if current_page == 'settings' %}active{% endif %}">
+                    <a href="{{ url_for('main.settings') }}">
+                        <i class="fa-solid fa-gear"></i> Settings
+                    </a>
+                </li>
+                {% endif %}
                 <li class="{% if current_page == 'upcoming' %}active{% endif %}">
                     <a href="{{ url_for('main.upcoming')  }}" class="calnder">
                         <i class="fa-solid fa-calendar-days"></i> Upcoming
