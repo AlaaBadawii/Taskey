@@ -1,5 +1,6 @@
 .settings-page {
     width: min(1040px, calc(100% - 32px));
+    max-width: 100%;
     margin: 20px auto 40px;
     display: grid;
     gap: 24px;
@@ -23,6 +24,13 @@
     display: flex;
     align-items: center;
     gap: 18px;
+    min-width: 0;
+}
+
+.settings-profile > div,
+.settings-summary,
+.settings-hero > * {
+    min-width: 0;
 }
 
 .settings-avatar {
@@ -52,6 +60,7 @@
     color: var(--p-color);
     line-height: 1.6;
     max-width: 580px;
+    overflow-wrap: anywhere;
 }
 
 .settings-summary {
@@ -60,6 +69,12 @@
     justify-items: end;
     color: var(--p-color);
     text-align: right;
+}
+
+.settings-summary span,
+.settings-summary strong {
+    max-width: 100%;
+    overflow-wrap: anywhere;
 }
 
 .settings-summary strong {

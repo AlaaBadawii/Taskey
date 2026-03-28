@@ -107,14 +107,17 @@ body.theme-dark .upcoming .task_num.summary-card .summary-label {
     list-style: none;
     padding: 0;
     display: grid;
-    gap: 22px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
     width: min(920px, 92%);
     margin: 0 auto 42px;
 }
 
 .upcoming ul .task {
-    padding: 28px 30px;
-    border-radius: 24px;
+    min-width: 0;
+    min-height: 100%;
+    padding: 22px 22px 20px;
+    border-radius: 20px;
     background: var(--panel-color);
     border: 1px solid var(--border-color);
     box-shadow: 0 8px 18px var(--shadow-color);
@@ -123,7 +126,7 @@ body.theme-dark .upcoming .task_num.summary-card .summary-label {
     transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
     display: flex;
     align-items: flex-start;
-    gap: 18px;
+    gap: 14px;
 }
 
 .upcoming ul .task:hover {
@@ -136,11 +139,27 @@ body.theme-dark .upcoming .task_num.summary-card .summary-label {
     background: color-mix(in srgb, var(--panel-color) 92%, var(--surface-color) 8%);
 }
 
+.upcoming ul .task.missed.priority-low {
+    background: color-mix(in srgb, #22c55e 12%, var(--panel-color) 88%);
+    border-color: color-mix(in srgb, #22c55e 28%, var(--border-color) 72%);
+}
+
+.upcoming ul .task.missed.priority-medium {
+    background: color-mix(in srgb, #f59e0b 16%, var(--panel-color) 84%);
+    border-color: color-mix(in srgb, #f59e0b 32%, var(--border-color) 68%);
+}
+
+.upcoming ul .task.missed.priority-high {
+    background: color-mix(in srgb, #ef4444 18%, var(--panel-color) 82%);
+    border-color: color-mix(in srgb, #ef4444 34%, var(--border-color) 66%);
+}
+
 .upcoming ul .task-body {
     display: grid;
-    gap: 14px;
-    padding-right: 72px;
+    gap: 10px;
+    padding-right: 44px;
     flex: 1;
+    min-width: 0;
 }
 
 .upcoming ul .task-top {
@@ -156,12 +175,75 @@ body.theme-dark .upcoming .task_num.summary-card .summary-label {
     gap: 10px;
 }
 
+.upcoming ul .task .task-state-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 7px 11px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 800;
+    line-height: 1;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    border: 1px solid transparent;
+}
+
+.upcoming ul .task .task-priority-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 7px 11px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 800;
+    line-height: 1;
+    text-transform: capitalize;
+    letter-spacing: 0.02em;
+    border: 1px solid transparent;
+}
+
+.upcoming ul .task .task-priority-badge.priority-low {
+    background-color: rgba(34, 197, 94, 0.14);
+    color: #15803d;
+    border-color: rgba(34, 197, 94, 0.22);
+}
+
+.upcoming ul .task .task-priority-badge.priority-medium {
+    background-color: rgba(245, 158, 11, 0.16);
+    color: #b45309;
+    border-color: rgba(245, 158, 11, 0.24);
+}
+
+.upcoming ul .task .task-priority-badge.priority-high {
+    background-color: rgba(239, 68, 68, 0.16);
+    color: #b91c1c;
+    border-color: rgba(239, 68, 68, 0.24);
+}
+
+.upcoming ul .task .task-state-badge.priority-low {
+    background-color: rgba(34, 197, 94, 0.14);
+    color: #15803d;
+    border-color: rgba(34, 197, 94, 0.22);
+}
+
+.upcoming ul .task .task-state-badge.priority-medium {
+    background-color: rgba(245, 158, 11, 0.16);
+    color: #b45309;
+    border-color: rgba(245, 158, 11, 0.24);
+}
+
+.upcoming ul .task .task-state-badge.priority-high {
+    background-color: rgba(239, 68, 68, 0.16);
+    color: #b91c1c;
+    border-color: rgba(239, 68, 68, 0.24);
+}
+
 .upcoming ul .task .task-name h3 {
     margin: 0;
     color: var(--main-color);
-    font-size: clamp(24px, 2.2vw, 32px);
+    font-size: clamp(20px, 1.7vw, 24px);
     font-weight: 800;
     line-height: 1.15;
+    overflow-wrap: anywhere;
 }
 
 .upcoming ul .task .task-info {
@@ -200,16 +282,16 @@ body.theme-dark .upcoming .task_num.summary-card .summary-label {
 
 .upcoming ul .task .title {
     color: var(--p-color);
-    font-size: 17px;
-    line-height: 1.55;
-    max-width: 68ch;
+    font-size: 15px;
+    line-height: 1.45;
+    max-width: 32ch;
 }
 
 .upcoming ul .task .more {
     display: flex;
     align-items: center;
-    gap: 16px;
-    font-size: 15px;
+    gap: 12px;
+    font-size: 14px;
 }
 
 .upcoming ul .task .more a {
@@ -219,7 +301,7 @@ body.theme-dark .upcoming .task_num.summary-card .summary-label {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    padding: 10px 14px;
+    padding: 9px 12px;
     border-radius: 12px;
     background-color: var(--muted-surface);
     border: 1px solid var(--border-color);
@@ -241,8 +323,8 @@ body.theme-dark .upcoming .task_num.summary-card .summary-label {
 
 .upcoming ul .task .task-actions {
     position: absolute;
-    right: 18px;
-    top: 62px;
+    right: 14px;
+    top: 52px;
     background: var(--elevated-surface);
     width: 156px;
     flex-direction: column;
@@ -260,10 +342,10 @@ body.theme-dark .upcoming .task_num.summary-card .summary-label {
 
 .upcoming ul .task .task-menu-button {
     position: absolute;
-    right: 22px;
-    top: 22px;
-    width: 38px;
-    height: 38px;
+    right: 14px;
+    top: 14px;
+    width: 34px;
+    height: 34px;
     border-radius: 50%;
     display: inline-flex;
     align-items: center;
@@ -388,6 +470,10 @@ body.theme-dark .upcoming .task_num.summary-card .summary-label {
     .upcoming ul .task .task-info {
         white-space: nowrap;
     }
+
+    .upcoming ul {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
 }
 
 @media (max-width: 640px) {
@@ -410,6 +496,10 @@ body.theme-dark .upcoming .task_num.summary-card .summary-label {
 
     .upcoming .summary-card {
         min-width: 0;
+    }
+
+    .upcoming ul {
+        grid-template-columns: 1fr;
     }
 
     .upcoming ul .task {
@@ -467,10 +557,6 @@ body.theme-dark .upcoming .task_num.summary-card .summary-label {
     .upcoming .summary-card {
         min-width: 0;
         width: 100%;
-    }
-
-    .upcoming ul .task {
-        flex-direction: column;
     }
 
     .upcoming ul .task .task-check {

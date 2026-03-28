@@ -3,7 +3,7 @@
 Task module
 """
 
-from datetime import datetime
+from datetime import date, datetime
 from .basemodel import BaseModel
 from .. import db
 from .group import Group
@@ -26,3 +26,17 @@ class Task(BaseModel):
 
     def __repr__(self):
         return f'<Task {self.id}: {self.task_name}>'
+
+    @property
+    def is_missed(self):
+        return (
+            self.status != 'completed'
+            and self.due_date is not None
+            and self.due_date < date.today()
+        )
+
+    @property
+    def display_status(self):
+        if self.is_missed:
+            return 'missed'
+        return self.status

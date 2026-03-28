@@ -31,7 +31,7 @@
     {% endif %}
     <ul>
         {% for task in tasks %}
-        <li class="task {%if task.status == 'completed'%} completed {% endif %}">
+        <li class="task {% if task.status == 'completed' %}completed{% endif %} {% if task.is_missed %}missed priority-{{ task.priority }}{% endif %}">
             <a href="{{ url_for('main.complete', task_id=task.id ) }}" class="task-check" aria-label="Toggle task completion">
                 <i class="fa-regular fa-circle"></i>
                 <i class="fa-solid fa-circle-check"></i>
@@ -40,10 +40,14 @@
                 <div class="task-top">
                     <div class="task-name">
                         <h3>{{ task.task_name }}</h3>
+                        <span class="task-priority-badge priority-{{ task.priority }}">{{ task.priority }}</span>
                         <div class="task-info">
                             <i class="fa-solid fa-calendar-day"></i>
                             <p>{{ task.due_date }}</p>
                         </div>
+                        {% if task.is_missed %}
+                        <span class="task-state-badge priority-{{ task.priority }}">Missed</span>
+                        {% endif %}
                     </div>
                 </div>
                 <p class="title">{{ task.task_title }}</p>
