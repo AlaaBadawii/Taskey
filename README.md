@@ -103,15 +103,29 @@ Taskey is a Flask task management app for organizing daily work with groups, pri
 
 6. Start the app:
 
-   ```sh
-   python app.py
-   ```
-
-   Or with Flask:
+   From inside the `taskey/` project directory:
 
    ```sh
-   flask --app app run --debug
+   python3 app.py
    ```
+
+   Or run it with Flask from the parent directory of `taskey/`:
+
+   ```sh
+   cd ..
+   flask --app taskey:create_app run --debug
+   ```
+
+   If you stay inside the `taskey/` directory and want to use Flask directly, set the parent directory on `PYTHONPATH` first:
+
+   ```sh
+   PYTHONPATH=.. flask --app taskey:create_app run --debug
+   ```
+
+   Note:
+
+   - `python3 app.py` works when you are inside the project folder.
+   - `flask --app taskey:create_app run` works when you are in the parent folder of `taskey/`.
 
 7. Open the app at `http://127.0.0.1:5000`.
 
