@@ -1,134 +1,20 @@
-import json
-from pathlib import Path
-from uuid import uuid4
-
-from flask import Blueprint, current_app, render_template, redirect, url_for, request, flash
+from flask import Blueprint, render_template, redirect, url_for, request, flash
 from . import db
 from flask_login import login_required, current_user
 from .models.task import Task
 from .models.group import Group
 from .models.user import User
 from datetime import date
-from werkzeug.utils import secure_filename
+from .utils.dates import parse_due_date
+from .utils.files import delete_profile_image, save_profile_image
+from .utils.tasks import (
+    build_task_summary,
+    build_task_steps,
+    deserialize_task_steps,
+    serialize_task_steps,
+)
 
 main = Blueprint('main', __name__)
-
-ALLOWED_IMAGE_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'webp'}
-
-
-def parse_due_date(raw_due_date):
-    if not raw_due_date:
-        return None
-    try:
-        return date.fromisoformat(raw_due_date)
-    except ValueError:
-        return None
-
-
-def allowed_image(filename):
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_IMAGE_EXTENSIONS
-
-
-def save_profile_image(file_storage):
-    if not file_storage or not file_storage.filename:
-        return None
-
-    if not allowed_image(file_storage.filename):
-        return None
-
-    original_name = secure_filename(file_storage.filename)
-    extension = original_name.rsplit('.', 1)[1].lower()
-    filename = f'{current_user.id}_{uuid4().hex}.{extension}'
-
-    upload_dir = Path(current_app.static_folder) / 'uploads' / 'profile_pictures'
-    upload_dir.mkdir(parents=True, exist_ok=True)
-
-    file_storage.save(upload_dir / filename)
-    return f'uploads/profile_pictures/{filename}'
-
-
-def delete_profile_image(image_path):
-    if not image_path:
-        return
-
-    image_file = Path(current_app.static_folder) / image_path
-    if image_file.exists():
-        image_file.unlink()
-
-
-def build_task_summary(tasks):
-    total_tasks = len(tasks)
-    completed_tasks = sum(1 for task in tasks if task.status == 'completed')
-    pending_tasks = total_tasks - completed_tasks
-    return {
-        'total_tasks': total_tasks,
-        'completed_tasks': completed_tasks,
-        'pending_tasks': pending_tasks,
-    }
-
-
-def parse_task_steps(raw_steps):
-    cleaned_steps = []
-    for step in raw_steps:
-        normalized_step = step.strip()
-        if normalized_step:
-            cleaned_steps.append(normalized_step)
-    return cleaned_steps
-
-
-def build_task_steps(step_texts, completed_states=None):
-    completed_states = completed_states or []
-    steps = []
-
-    for index, step_text in enumerate(step_texts):
-        normalized_step = step_text.strip()
-        if not normalized_step:
-            continue
-
-        is_completed = False
-        if index < len(completed_states):
-            is_completed = completed_states[index] == 'true'
-
-        steps.append({
-            'text': normalized_step,
-            'completed': is_completed,
-        })
-
-    return steps
-
-
-def serialize_task_steps(steps):
-    return json.dumps(steps) if steps else None
-
-
-def deserialize_task_steps(raw_steps):
-    if not raw_steps:
-        return []
-
-    try:
-        parsed_steps = json.loads(raw_steps)
-    except (TypeError, ValueError):
-        parsed_steps = [raw_steps]
-
-    if not isinstance(parsed_steps, list):
-        return []
-
-    normalized_steps = []
-    for step in parsed_steps:
-        if isinstance(step, str) and step.strip():
-            normalized_steps.append({
-                'text': step.strip(),
-                'completed': False,
-            })
-        elif isinstance(step, dict):
-            text = step.get('text', '').strip()
-            if text:
-                normalized_steps.append({
-                    'text': text,
-                    'completed': bool(step.get('completed', False)),
-                })
-
-    return normalized_steps
 
 
 @main.route('/')
